@@ -9,15 +9,13 @@ import org.springframework.web.servlet.handler.*;
 @Component @ConditionalOnProperty("tennis-stats.down-for-maintenance")
 public class DownForMaintenanceInterceptor extends HandlerInterceptorAdapter {
 
-	private static final String MAINTENANCE_PATH = "/maintenance";
-
 	@Override public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		var servletPath = request.getServletPath();
-		if (!(servletPath.equals(MAINTENANCE_PATH) || servletPath.startsWith("/images") || servletPath.startsWith("/webjars"))) {
-			response.sendRedirect(request.getContextPath() + MAINTENANCE_PATH);
-			return false;
-		}
-		else
+		if (request.getRequestURI().startsWith(request.getContextPath() + "/actuator/health"))
 			return true;
+		response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+		response.setContentType("application/json");
+		response.setHeader("Retry-After", "300");
+		response.getWriter().write("{\"status\":503,\"error\":\"Service unavailable\"}");
+		return false;
 	}
 }

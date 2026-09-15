@@ -1,3 +1,16 @@
+# Tennis Stats API
+
+Ce fork migre Ultimate Tennis Statistics vers un backend JSON destiné à un front Next.js séparé.
+
+- Source CSV : [elitemajik-ship-it/tennis_atp](https://github.com/elitemajik-ship-it/tennis_atp).
+- API : `/api/v1`, services statistiques et base PostgreSQL existants conservés.
+- Ancien front Thymeleaf, jQuery et Bootstrap supprimé.
+- [Démarrage, import et périmètre de la migration](docs/backend-migration.md).
+
+Le contenu ci-dessous décrit le projet d’origine ; ses captures et son architecture ne décrivent plus ce fork.
+
+---
+
 # Ultimate Tennis Statistics and Tennis Crystal Ball
 
 [![Build Status](https://travis-ci.org/mcekovic/tennis-crystal-ball.svg?branch=master)](https://travis-ci.org/mcekovic/tennis-crystal-ball)

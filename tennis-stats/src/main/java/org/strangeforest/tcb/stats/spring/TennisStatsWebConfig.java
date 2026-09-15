@@ -3,16 +3,16 @@ package org.strangeforest.tcb.stats.spring;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.context.properties.*;
-import org.springframework.boot.web.servlet.error.*;
 import org.springframework.context.annotation.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.*;
-import org.strangeforest.tcb.stats.controller.*;
 
 @Configuration @ConditionalOnWebApplication
 @EnableConfigurationProperties(ServerSSLProperties.class)
 public class TennisStatsWebConfig implements WebMvcConfigurer {
 
 	@Autowired(required = false) private DownForMaintenanceInterceptor downForMaintenanceInterceptor;
+	@Value("${tennis-stats.api.allowed-origins:}") private String[] allowedOrigins;
 
 	@Override public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new RequestURLLoggingHandlerInterceptor());
@@ -20,13 +20,14 @@ public class TennisStatsWebConfig implements WebMvcConfigurer {
 			registry.addInterceptor(downForMaintenanceInterceptor);
 	}
 
-	@Bean
-	public UTSThymeleafDialect utsDialect() {
-		return new UTSThymeleafDialect();
+	@Override public void configurePathMatch(PathMatchConfigurer configurer) {
+		configurer.addPathPrefix("/api/v1", type ->
+			type.getPackageName().startsWith("org.strangeforest.tcb.stats.controller")
+				&& type.isAnnotationPresent(RestController.class));
 	}
 
-	@Bean
-	public ErrorAttributes errorAttributes() {
-		return new TennisStatsErrorAttributes();
+	@Override public void addCorsMappings(CorsRegistry registry) {
+		if (allowedOrigins.length > 0)
+			registry.addMapping("/api/v1/**").allowedOrigins(allowedOrigins).allowedMethods("GET");
 	}
 }

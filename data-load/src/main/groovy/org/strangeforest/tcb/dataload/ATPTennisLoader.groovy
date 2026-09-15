@@ -27,10 +27,9 @@ class ATPTennisLoader {
 		println 'Loading rankings'
 		load {
 			def rows = 0
-			if (full) {
-				for (decade in ['70s', '80s', '90s', '00s', '10s', '20s'])
-					rows += loader.loadFile(baseDir() + "atp_rankings_${decade}.csv")
-			}
+			if (full)
+				for (file in dataFiles(~/atp_rankings_\d{2}s\.csv/))
+					rows += loader.loadFile(file.path)
 			rows += loader.loadFile(baseDir() + "atp_rankings_current.csv", true)
 		}
 		println()
@@ -40,12 +39,10 @@ class ATPTennisLoader {
 		println 'Loading matches'
 		load {
 			def rows = 0
-			if (full) {
-				for (year in 1968..2020)
-					rows += loader.loadFile(baseDir() + "atp_matches_${year}.csv")
-			}
-			def year = 2021
-			rows += loader.loadFile(baseDir() + "atp_matches_${year}.csv")
+			def files = dataFiles(~/atp_matches_\d{4}\.csv/)
+			// Replay the last two available seasons in delta mode, including year-end corrections.
+			for (file in (full ? files : files.takeRight(2)))
+				rows += loader.loadFile(file.path)
 		}
 		println()
 	}
@@ -73,6 +70,13 @@ class ATPTennisLoader {
 		def seconds = stopwatch.elapsed(TimeUnit.SECONDS)
 		int rowsPerSecond = seconds ? rows / seconds : 0
 		println "Total rows: $rows in $stopwatch ($rowsPerSecond row/s)"
+	}
+
+	private List<File> dataFiles(java.util.regex.Pattern pattern) {
+		def files = new File(baseDir()).listFiles()?.findAll { it.isFile() && it.name ==~ pattern }?.sort { it.name }
+		if (!files)
+			throw new IllegalArgumentException("No CSV files matching $pattern in ${baseDir()}")
+		return files
 	}
 
 	private baseDir() {

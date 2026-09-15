@@ -1,7 +1,0 @@
-<div class="input-group-btn" xmlns:th="http://www.thymeleaf.org" th:fragment="quickPicks">
-	<!--/*@thymesVar id="playerQuickPicks" type="java.util.Map<String, String>"*/-->
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Quick Picks <span class="caret"></span></button>
-	<ul class="dropdown-menu">
-		<li th:each="quickPick : ${playerQuickPicks}"><a href="#" onclick="selectPlayers(this)" th:text="${quickPick.key}" th:title="${quickPick.value}"></a></li>
-	</ul>
-</div>

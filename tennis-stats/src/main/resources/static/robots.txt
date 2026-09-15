@@ -1,5 +1,0 @@
-User-Agent: *
-Disallow: /inProgressEventProbableMatches
-Disallow: /inProgressEventPlayerPath
-Disallow: /inProgressEventFavorites
-Disallow: /h2hHypotheticalMatchup

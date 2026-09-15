@@ -7,7 +7,7 @@ mainClassName = 'org.strangeforest.tcb.dataload.Main'
 applicationDefaultJvmArgs = [
 	'-Xmx256m',
 	'-Dtcb.db.url=jdbc:postgresql://localhost:5432/tcb',
-	'-Dtcb.db.connections=1',
+	'-Dtcb.db.connections=2',
 	'-Dtcb.data.base-dir=/tcb/tennis_atp',
 	'-Dwebdriver.gecko.driver=/tcb/geckodriver/geckodriver'
 ]
@@ -21,9 +21,6 @@ dependencies {
 	implementation (project(':tennis-stats')) {
 		exclude group: 'org.springframework.boot'
 		exclude group: 'io.micrometer'
-		exclude group: 'org.thymeleaf.extras'
-		exclude group: 'org.webjars'
-		exclude group: 'org.webjars.bower'
 		exclude group: 'com.maxmind.geoip2'
 		exclude group: 'eu.bitwalker'
 	}

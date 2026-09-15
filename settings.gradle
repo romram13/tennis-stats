@@ -2,13 +2,11 @@ pluginManagement {
 	repositories {
 		gradlePluginPortal()
 		mavenCentral()
-		jcenter()
 	}
 	plugins {
 		id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
 		id 'org.springframework.boot' version "$springBootVersion"
 		id 'io.spring.dependency-management' version "$springDependencyManagementVersion"
-		id 'com.gorylenko.gradle-git-properties' version "$gradleGitPropertiesVersion"
 		id 'org.flywaydb.flyway' version "$flywayVersion"
 		id 'org.hidetake.ssh' version "$gradleSshVersion"
 		id 'com.github.ben-manes.versions' version "$gradleVersionsVersion"

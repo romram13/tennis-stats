@@ -30,12 +30,32 @@ abstract class BaseCSVLoader {
 	def loadFile(String file, boolean readFirstLine = false) {
 		println "Loading file '$file'"
 		def stopwatch = Stopwatch.createStarted()
-		List columnNames = columnNames()
-		def csvParams = [readFirstLine: readFirstLine]
-		if (columnNames)
-			csvParams << [columnNames: columnNames]
-		def data = CsvParser.parseCsv(csvParams, new FileReader(file))
-		int rows = load(data)
+		int rows = new File(file).withReader('UTF-8') { reader ->
+			def csvParams = [readFirstLine: readFirstLine]
+			List columns = columnNames()
+			if (columns) {
+				reader.mark(65536)
+				def firstLine = reader.readLine()?.replace('\uFEFF', '')
+				reader.reset()
+				if (!firstLine)
+					throw new IllegalArgumentException("Empty CSV file: $file")
+				def header = firstLine.split(',').collect { it.trim().replace('"', '') }
+				def aliases = [name_first: 'first_name', name_last: 'last_name', ioc: 'country',
+					ranking_date: 'rank_date', player: 'player_id', points: 'rank_points']
+				if (!(header[0] ==~ /\d+/)) {
+					header = header.collect { aliases[it] ?: it }
+					if (!header.containsAll(columns))
+						throw new IllegalArgumentException("Missing CSV columns in ${file}: ${columns - header}")
+					csvParams.columnNames = header
+					csvParams.readFirstLine = false
+				}
+				else {
+					csvParams.columnNames = columns
+					csvParams.readFirstLine = true
+				}
+			}
+			load(CsvParser.parseCsv(csvParams, reader))
+		}
 		printLoadInfo(stopwatch, rows)
 		return rows
 	}
@@ -65,37 +85,44 @@ abstract class BaseCSVLoader {
 			throw new IllegalArgumentException("At least 2 DB connections are required for CVS data load, check ${SqlPool.DB_CONNECTIONS_PROPERTY}")
 		sqlPool.withSql { sql ->
 			def executor = Executors.newFixedThreadPool(Math.min(sqlPool.size(), threadCount()))
-			def paramsConn = sql.connection
-			for (record in data) {
-				if (record.values.size() <= 1)
-					continue
-				try {
-					def params = params(record, paramsConn)
-					if (params) {
-						paramsBatch << params
-						if (++rows % batchSize == 0) {
-							execute(executor, loadSql, paramsBatch, batches)
-							paramsBatch = []
+			def futures = []
+			try {
+				def paramsConn = sql.connection
+				for (record in data) {
+					if (record.values.size() <= 1)
+						continue
+					try {
+						def params = params(record, paramsConn)
+						if (params) {
+							paramsBatch << params
+							if (++rows % batchSize == 0) {
+								futures << execute(executor, loadSql, paramsBatch, batches)
+								paramsBatch = []
+							}
 						}
 					}
+					catch (Exception ex) {
+						throw new Exception("Error processing record $record", ex)
+					}
 				}
-				catch (Exception ex) {
-					throw new Exception("Error processing record $record", ex)
-				}
+				if (paramsBatch)
+					futures << execute(executor, loadSql, paramsBatch, batches)
+				executor.shutdown()
+				// Surface worker failures so a broken import cannot report success.
+				futures.each { it.get() }
 			}
-			if (paramsBatch)
-				execute(executor, loadSql, paramsBatch, batches)
-			executor.shutdown()
-			executor.awaitTermination(1L, TimeUnit.DAYS)
+			finally {
+				executor.shutdownNow()
+			}
 		}
 		rows
 	}
 
 	def execute(ExecutorService executor, String loadSql, Collection<Map> paramsBatch, ProgressTicker batches) {
-		executor.execute {
+		executor.submit({
 			executeWithBatch(loadSql, paramsBatch)
 			batches.tick()
-		}
+		} as Runnable)
 	}
 
 	def executeWithBatch(String loadSql, Collection<Map> paramsBatch) {
@@ -169,7 +196,13 @@ abstract class BaseCSVLoader {
 	}
 
 	static String country(c, d = null) {
-		c && Country.code(c) ? c : d
+		try {
+			c && Country.code(c) ? c : d
+		}
+		catch (IllegalArgumentException ignored) {
+			System.err.println "WARN: Unsupported country code '$c'; using '${d ?: 'null'}'"
+			d
+		}
 	}
 
 	static String hand(c) {

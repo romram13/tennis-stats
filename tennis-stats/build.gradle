@@ -7,25 +7,10 @@ plugins {
 	id 'org.springframework.boot'
 	id 'io.spring.dependency-management'
 	id 'application'
-	id 'com.gorylenko.gradle-git-properties'
 }
 
 mainClassName = 'org.strangeforest.tcb.stats.TennisStatsApplication'
-applicationDefaultJvmArgs = [
-	'-Dspring.profiles.active=digitalocean,jobs,ssl',
-	'-Xms256m',
-	'-Xmx256m',
-	'-Dcom.sun.management.jmxremote',
-	'-Dcom.sun.management.jmxremote.port=9999',
-	'-Dcom.sun.management.jmxremote.rmi.port=9999',
-	'-Dcom.sun.management.jmxremote.authenticate=false',
-	'-Dcom.sun.management.jmxremote.ssl=false',
-	'--add-opens=java.base/java.time=ALL-UNNAMED',
-	'--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED',
-	'-Xlog:gc=info:file=/tcb/tennis-stats/logs/gc.log:time,tags:filecount=10,filesize=10m',
-	'-XX:+ExplicitGCInvokesConcurrent',
-	'-XX:+HeapDumpOnOutOfMemoryError'
-]
+applicationDefaultJvmArgs = ['-Xms256m', '-Xmx512m']
 
 sourceSets {
 	itest {
@@ -63,9 +48,7 @@ dependencies {
 		exclude group: 'com.fasterxml.jackson.datatype', module: 'jackson-datatype-jdk8'
 		exclude group: 'com.fasterxml.jackson.module', module: 'jackson-module-parameter-names'
 	}
-	implementation ('org.springframework.boot:spring-boot-starter-thymeleaf') {
-		exclude group: 'org.apache.logging.log4j'
-	}
+
 	implementation ('org.springframework.boot:spring-boot-starter-actuator') {
 		exclude group: 'org.apache.logging.log4j'
 	}
@@ -80,14 +63,7 @@ dependencies {
 	implementation ("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
 	implementation ("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
 	implementation ("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-	runtimeOnly ("org.webjars:bootstrap:$bootstrapVersion")
-	runtimeOnly ("org.webjars:jquery:$jQueryVersion")
-	runtimeOnly ("org.webjars:jquery-ui:$jQueryUIVersion")
-	runtimeOnly ("org.webjars:jquery-ui-themes:$jQueryUIVersion")
-	runtimeOnly ("org.webjars.bower:jquery-bootgrid:$jQueryBootgridVersion") {
-		exclude group: 'org.webjars.bower'
-	}
-	runtimeOnly ("org.webjars:font-awesome:$fontAwesomeVersion")
+
 	implementation ("com.maxmind.geoip2:geoip2:$geoip2Version") {
 		exclude group: 'org.apache.httpcomponents'
 	}
@@ -106,7 +82,8 @@ jar {
 }
 
 bootJar {
-	enabled = false
+	enabled = true
+	archiveClassifier = 'api'
 }
 
 bootDistZip {

@@ -4,6 +4,7 @@ import java.sql.Connection
 import java.nio.file.Path
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.io.TempDir
+import org.strangeforest.tcb.util.Country
 
 class CSVSourceTest {
 
@@ -41,6 +42,18 @@ class CSVSourceTest {
 	@Test void 'unsupported country codes do not abort player imports'() {
 		assert BaseCSVLoader.country('?', '???') == '???'
 		assert BaseCSVLoader.country('USA', '???') == 'USA'
+	}
+
+	@Test void 'preserves historical East Germany country in player imports'() {
+		def loader = new CapturingLoader(new PlayerLoader(null).columnNames())
+		def file = csv('players.csv', 'player_id,name_first,name_last,hand,dob,ioc\n1,Test,Player,R,19600101,GDR\n')
+		assert loader.loadFile(file.path) == 1
+		def params = new PlayerLoader(null).params(loader.records[0], null)
+		assert params.country_id == 'GDR'
+		def country = new Country(params.country_id)
+		assert country.id == 'GDR'
+		assert country.name == 'East Germany'
+		assert country.code == 'de'
 	}
 
 	@Test void 'discovers singles seasons and replays last two in delta mode'() {

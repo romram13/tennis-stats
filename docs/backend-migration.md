@@ -64,7 +64,10 @@ data-load/build/install/data-load/bin/data-load -bd "$PWD/data/tennis_atp" -ln
   Les alias de colonnes sont normalisés. Les champs supplémentaires sont ignorés
   par les procédures actuelles ; taille et identifiant Wikidata ne sont pas importés.
   Les codes pays non reconnus par le référentiel historique sont signalés dans les
-  logs et remplacés par `???` (notamment GDR, LEB et BIR dans le fichier vérifié).
+  logs et remplacés par `???` (notamment LEB et BIR dans le fichier vérifié).
+  Le code historique `GDR` est reconnu et conservé comme Allemagne de l'Est ;
+  le code ISO allemand actuel sert uniquement à l'affichage. Les valeurs `???`
+  déjà enregistrées avant cette correction ne sont pas réparées automatiquement.
 - Classements : en-tête `ranking_date,rank,player,points` ; les fichiers historiques
   sans en-tête restent acceptés sans perdre leur première ligne.
 - Matchs : découverte des fichiers `atp_matches_YYYY.csv`, sans année finale codée en dur.
@@ -125,7 +128,8 @@ Prochains lots :
 2. Migrer Java/Spring/Gradle, remplacer les déploiements et jobs hérités.
 3. Définir OpenAPI et des DTO indépendants de Bootgrid/Google Charts, compléter la
    couverture fonctionnelle des anciennes pages (H2H, profils détaillés, prévisions).
-4. Créer le front Next.js dans un dépôt séparé et générer son client depuis OpenAPI.
+4. Compléter le [front Next.js existant](../frontend/README.md), puis générer son client
+   depuis OpenAPI ; son dossier autonome pourra être extrait dans un dépôt séparé.
 
 Le README de la [source de données](https://github.com/elitemajik-ship-it/tennis_atp#license)
 indique CC BY-NC-SA 4.0. Le [projet d'origine](https://github.com/mcekovic/tennis-crystal-ball#license)

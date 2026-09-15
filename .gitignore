@@ -5,3 +5,14 @@ build
 classes
 out
 /data/
+
+/.local/
+/frontend/node_modules/
+/frontend/.next/
+/frontend/*.tsbuildinfo
+/frontend/.env.local
+/frontend/playwright-report/
+/frontend/test-results/
+/.env.local
+
+/scripts/__pycache__/

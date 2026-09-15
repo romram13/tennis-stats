@@ -32,6 +32,8 @@ public class Country {
 	}
 
 	public String getName() {
+		if ("GDR".equals(countryId))
+			return "East Germany";
 		var code = code(countryId);
 		return code != null ? code.getName() : UNKNOWN_NAME;
 	}
@@ -86,6 +88,8 @@ public class Country {
 		entry("ESA", "SLV"),
 		entry("FIJ", "FJI"),
 		entry("FRG", "DEU"),
+		// Use today's ISO code for display, retaining GDR as the historical ID.
+		entry("GDR", "DEU"),
 		entry("GER", "DEU"),
 		entry("GRE", "GRC"),
 		entry("GRN", "GRL"),

@@ -72,11 +72,18 @@ data-load/build/install/data-load/bin/data-load -bd "$PWD/data/tennis_atp" -ln
   sans en-tête restent acceptés sans perdre leur première ligne.
 - Matchs : découverte des fichiers `atp_matches_YYYY.csv`, sans année finale codée en dur.
   Qualifications, Challengers, Futures et doubles ne sont pas chargés.
+  Le niveau source `O` des Jeux olympiques est accepté, en plus de l'ancien
+  classement `A` avec un nom contenant `Olympics`.
 - Import complet : tous les fichiers de saisons disponibles et classements par décennie.
 - Import delta : joueurs, classements courants et les deux dernières saisons disponibles.
   Pour répercuter des corrections plus anciennes, relancer un import complet.
 - Les erreurs des lots SQL sont propagées à l'appelant. L'import n'est pas atomique :
   des lots précédents peuvent avoir été validés avant une erreur.
+
+Après l'échec d'un import complet, corriger le problème puis relancer `-f -lt`,
+sans supprimer la base. Les procédures fusionnent les matchs déjà présents.
+`-ln` ne suffit pas à reprendre un historique incomplet : seules les deux dernières
+saisons disponibles sont relues.
 
 Les commandes `-lt` et `-ln` n'exécutent plus les scrapers ATP/Wikipédia ni les scripts
 de corrections destinés à l'ancien snapshot. Les commandes historiques explicites

@@ -300,6 +300,7 @@ class MatchLoader extends BaseCSVLoader {
 					return 'T'
 				else
 					return 'B'
+			case 'O': return 'O'
 			case 'D': return 'D'
 			case 'C': return 'C'
 			default: throw new IllegalArgumentException("Unknown tournament level: $level")

@@ -85,6 +85,20 @@ sans supprimer la base. Les procédures fusionnent les matchs déjà présents.
 `-ln` ne suffit pas à reprendre un historique incomplet : seules les deux dernières
 saisons disponibles sont relues.
 
+Si l'import échoue avec `invalid input value for enum tournament_entry: "ITF"`,
+mettre à jour le type de la base existante avant de reprendre. La migration
+conserve aussi les autres codes source récents (`UP`, `NG`, `W`, `L`) :
+
+```sh
+PGPASSWORD="${DB_PASSWORD:-tcb}" psql -X -h 127.0.0.1 -p "${DB_PORT:-55432}" \
+  -U tcb -d tcb -v ON_ERROR_STOP=1 \
+  -f crystal-ball/src/main/db/migration/V1.0.3__tournament_entry_source_codes.sql
+```
+
+Puis relancer l'import complet `-f -lt` avec les mêmes paramètres de connexion
+et de répertoire CSV. Ne pas supprimer la base ; les lots déjà validés sont
+fusionnés lors de la reprise. Le schéma des nouvelles bases inclut ces codes.
+
 Les commandes `-lt` et `-ln` n'exécutent plus les scrapers ATP/Wikipédia ni les scripts
 de corrections destinés à l'ancien snapshot. Les commandes historiques explicites
 (`-nr`, `-nt`, `-lp`, etc.) et les jobs du profil `jobs` restent du code legacy :

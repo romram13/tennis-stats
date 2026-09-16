@@ -6,6 +6,18 @@ import org.junit.jupiter.api.Test
 
 class MatchLoaderTest {
 
+	@Test void 'preserves source entry codes for both players including Olympic entries'() {
+		getClass().getResourceAsStream('/paris-olympics-2024.csv').withReader('UTF-8') { reader ->
+			def record = CsvParser.parseCsv([:], reader).next().toMap()
+			def connection = [createArrayOf: { String type, Object values -> null }] as Connection
+			for (entry in ['ITF', 'UP', 'NG', 'W', 'L']) {
+				def params = new MatchLoader(null).params(record + [winner_entry: entry, loser_entry: entry], connection)
+				assert params.winner_entry == entry
+				assert params.loser_entry == entry
+			}
+		}
+	}
+
 	@Test void 'imports Paris Olympic match with explicit or legacy tournament level'() {
 		getClass().getResourceAsStream('/paris-olympics-2024.csv').withReader('UTF-8') { reader ->
 			def record = CsvParser.parseCsv([:], reader).next().toMap()

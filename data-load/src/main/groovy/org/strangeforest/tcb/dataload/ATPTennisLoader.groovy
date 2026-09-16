@@ -357,6 +357,7 @@ class ATPTennisLoader {
 	}
 
 	def refreshMaterializedViews(Sql sql) {
+		loadTeamTournamentWinners(sql)
 		refreshMaterializedViews(sql,
 			'event_participation',
 			'player_tournament_event_result', 'player_titles', 'player_team_titles',
@@ -371,6 +372,11 @@ class ATPTennisLoader {
 			'player_tournament_win_streak', 'player_tournament_level_win_streak',
 			'player_season_goat_points', 'player_goat_points', 'player_surface_season_goat_points', 'player_surface_goat_points', 'player_tournament_goat_points'
 		)
+	}
+
+	def loadTeamTournamentWinners(Sql sql) {
+		println 'Loading team tournament winners...'
+		executeSQLFile(sql, '/team-tournament-winners.sql')
 	}
 
 	def refreshMaterializedViews(Sql sql, String... materializedViews) {

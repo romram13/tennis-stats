@@ -1,4 +1,5 @@
-DELETE FROM team_tournament_event_winner;
+-- Supplement CSV matches with team champions; preserve existing corrections.
+-- Davis Cup: https://www.daviscup.com/en/previous-champions (through 2025).
 INSERT INTO team_tournament_event_winner
 (season, level, winner_id, runner_up_id, score)
 VALUES
@@ -55,6 +56,12 @@ VALUES
 (2017, 'D', 'FRA', 'BEL', '3-2'),
 (2018, 'D', 'CRO', 'FRA', '3-1'),
 (2019, 'D', 'ESP', 'CAN', '2-0'),
+-- No edition in 2020. RUS matches the player country code for the 2021 RTF team.
+(2021, 'D', 'RUS', 'CRO', '2-0'),
+(2022, 'D', 'CAN', 'AUS', '2-0'),
+(2023, 'D', 'ITA', 'AUS', '2-0'),
+(2024, 'D', 'ITA', 'NED', '2-0'),
+(2025, 'D', 'ITA', 'ESP', '2-0'),
 -- World Team Cup
 (1975, 'T', 'USA', 'GBR', '2-1'),
 (1978, 'T', 'ESP', 'AUS', '2-1'),
@@ -93,6 +100,5 @@ VALUES
 (2011, 'T', 'GER', 'ARG', '2-1'),
 (2012, 'T', 'SRB', 'CZE', '3-0'),
 -- ATP Cup
-(2020, 'T', 'SRB', 'ESP', '2-1');
-
-COMMIT;
+(2020, 'T', 'SRB', 'ESP', '2-1')
+ON CONFLICT (season, level) DO NOTHING;

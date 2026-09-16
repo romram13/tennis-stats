@@ -23,6 +23,7 @@ class RecordsLoader {
 	def loadRecords(ATPTennisLoader atpTennisLoader, Sql sql) {
 		println 'Loading records'
 		def stopwatch = Stopwatch.createStarted()
+		atpTennisLoader.loadTeamTournamentWinners(sql)
 		doLoadRecords(Records.getRecordCategories(), 'famous')
 		doPause()
 		doLoadRecords(Records.getInfamousRecordCategories(), 'infamous')

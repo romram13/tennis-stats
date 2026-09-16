@@ -57,9 +57,7 @@ export function PlayerGoat({ id }: { id: string }) {
         ← Classement GOAT
       </Link>
       <header className="goat-intro">
-        <p className="eyebrow">UNE CARRIÈRE EN POINTS</p>
-        <h1>{data?.player.name || "Points GOAT"}</h1>
-        <p>Barème standard · Coefficients × 1 · Sans extrapolation</p>
+        <h1>{data?.player.name || "JOUEUR"}</h1>
         <Link href={`/joueurs/${id}`}>Profil et matchs →</Link>
       </header>
       <label className="goat-surface">

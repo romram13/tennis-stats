@@ -864,6 +864,27 @@ select {
   }
 }
 
+.records-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px;
+}
+.records-table th[scope="row"] {
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 14px;
+  min-width: 220px;
+}
+.record-holders { list-style: none; margin: 0; padding: 0; }
+.record-holders li + li { margin-top: 12px; }
+.record-holders small { display: block; color: var(--muted); margin-top: 5px; }
+@media (max-width: 600px) {
+  .header-inner { height: auto; min-height: 76px; flex-wrap: wrap; padding-top: 16px; padding-bottom: 16px; gap: 16px; }
+  .header-inner nav { flex-wrap: wrap; }
+  .records-filters { grid-template-columns: 1fr; }
+}
+
 /* GOAT: compact tables and the three historical point families. */
 .goat-page {
   padding-top: 38px;

@@ -8,6 +8,7 @@ const endpoints = new Set([
   "matchesTable",
   "goatListTable",
   "goat/legend",
+  "recordsTable",
 ]);
 export async function GET(
   request: NextRequest,

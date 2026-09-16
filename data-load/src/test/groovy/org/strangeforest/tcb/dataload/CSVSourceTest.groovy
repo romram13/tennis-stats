@@ -63,19 +63,26 @@ class CSVSourceTest {
 		 'atp_matches_qual_chall_2026.csv', 'atp_matches_futures_2026.csv'].each { csv(it, '') }
 		def previousDir = System.getProperty(LoadParams.BASE_DIR_PROPERTY)
 		def previousFull = System.getProperty(LoadParams.FULL_LOAD_PROPERTY)
+		def previousOut = System.out
+		def output = new ByteArrayOutputStream()
 		try {
+			System.setOut(new PrintStream(output, true, 'UTF-8'))
 			System.setProperty(LoadParams.BASE_DIR_PROPERTY, directory.toString())
 			def paths = []
 			def loader = new Expando(loadFile: { String path -> paths << new File(path).name; 1 })
 			System.setProperty(LoadParams.FULL_LOAD_PROPERTY, 'true')
 			new ATPTennisLoader().loadMatches(loader)
 			assert paths == ['atp_matches_1968.csv', 'atp_matches_2025.csv', 'atp_matches_2026.csv']
+			assert output.toString('UTF-8').contains('Total rows: 3 in ')
+			output.reset()
 			paths.clear()
 			System.setProperty(LoadParams.FULL_LOAD_PROPERTY, 'false')
 			new ATPTennisLoader().loadMatches(loader)
 			assert paths == ['atp_matches_2025.csv', 'atp_matches_2026.csv']
+			assert output.toString('UTF-8').contains('Total rows: 2 in ')
 		}
 		finally {
+			System.setOut(previousOut)
 			restore(LoadParams.BASE_DIR_PROPERTY, previousDir)
 			restore(LoadParams.FULL_LOAD_PROPERTY, previousFull)
 		}

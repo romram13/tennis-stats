@@ -43,6 +43,7 @@ class ATPTennisLoader {
 			// Replay the last two available seasons in delta mode, including year-end corrections.
 			for (file in (full ? files : files.takeRight(2)))
 				rows += loader.loadFile(file.path)
+			return rows
 		}
 		println()
 	}

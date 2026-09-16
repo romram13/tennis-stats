@@ -147,6 +147,8 @@ public class Player {
 	}
 
 	public String getHandName() {
+		if (hand == null)
+			return null;
 		switch (hand) {
 			case "L": return "Left-handed";
 			case "R": return "Right-handed";
@@ -163,6 +165,8 @@ public class Player {
 	}
 
 	public String getBackhandName() {
+		if (backhand == null)
+			return null;
 		switch (backhand) {
 			case "1": return "One-handed";
 			case "2": return "Two-handed";

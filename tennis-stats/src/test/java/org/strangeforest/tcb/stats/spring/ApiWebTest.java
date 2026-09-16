@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.setup.*;
 import org.springframework.web.context.*;
 import org.springframework.web.servlet.config.annotation.*;
 import org.strangeforest.tcb.stats.controller.*;
+import org.strangeforest.tcb.stats.model.core.*;
 import org.strangeforest.tcb.stats.service.*;
 import org.strangeforest.tcb.stats.util.*;
 
@@ -49,6 +50,28 @@ class ApiWebTest {
 	@Test void rejectsUnknownPlayer() throws Exception {
 		when(playerService.getPlayer(999)).thenThrow(new NotFoundException("Player", 999));
 		mvc.perform(get("/api/v1/players/999")).andExpect(status().isNotFound());
+	}
+
+	@Test void servesPlayerWithMissingBackhand() throws Exception {
+		Player player = new Player(57819);
+		player.setHand("R");
+		when(playerService.getPlayer(57819)).thenReturn(player);
+		mvc.perform(get("/api/v1/players/57819"))
+			.andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.id").value(57819))
+			.andExpect(jsonPath("$.handName").value("Right-handed"))
+			.andExpect(jsonPath("$.backhandName").value(org.hamcrest.Matchers.nullValue()));
+	}
+
+	@Test void servesPlayerWithMissingHand() throws Exception {
+		Player player = new Player(57819);
+		player.setBackhand("2");
+		when(playerService.getPlayer(57819)).thenReturn(player);
+		mvc.perform(get("/api/v1/players/57819"))
+			.andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.id").value(57819))
+			.andExpect(jsonPath("$.handName").value(org.hamcrest.Matchers.nullValue()))
+			.andExpect(jsonPath("$.backhandName").value("Two-handed"));
 	}
 
 	@Test void allowsConfiguredFrontendOriginOnly() throws Exception {

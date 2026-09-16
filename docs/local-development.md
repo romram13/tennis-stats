@@ -129,6 +129,28 @@ détaillées dans [le guide du backend](backend-migration.md).
 Après import, redémarrer `./dev.sh` pour renouveler les caches de l'API.
 L'intégralité de l'import historique n'a pas été validée dans ce lot front/lanceur.
 
+Si les joueurs et les matchs sont présents mais que `goatListTable` renvoie
+`"total":0`, vérifier que le calcul des vues matérialisées s'est terminé.
+Une base créée avec les anciennes fonctions SQL peut échouer sous PostgreSQL 17+
+avec `relation "tournament_event_rank_factor" does not exist`, même si cette table
+existe : le rafraîchissement utilise un `search_path` restreint.
+Pour mettre à jour ces fonctions et recalculer les vues sans réimporter les CSV :
+
+```sh
+PGPASSWORD="${DB_PASSWORD:-tcb}" psql -X -h 127.0.0.1 -p "${DB_PORT:-55432}" \
+  -U tcb -d tcb -v ON_ERROR_STOP=1 --single-transaction \
+  -f crystal-ball/src/main/db/create-functions.sql
+
+JAVA_HOME="$PWD/.local/jdk-11" data-load/build/install/data-load/bin/data-load \
+  -url "jdbc:postgresql://127.0.0.1:${DB_PORT:-55432}/tcb" \
+  -p "${DB_PASSWORD:-tcb}" -rc
+```
+
+Redémarrer ensuite `./dev.sh` pour vider les réponses mises en cache.
+`-rc` recalcule les vues et applique les corrections historiques de maintenance ;
+il ne reprend pas un import CSV interrompu et ne calcule ni les Elo (`-el`)
+ni les records (`-rr`). Leur absence laisse donc ces composantes GOAT incomplètes.
+
 ## Vérifications réalisées
 
 - compilation de production Next.js et vérification TypeScript ;

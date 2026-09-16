@@ -1,3 +1,6 @@
+-- Keep application objects visible when materialized views are refreshed
+-- with a restricted search_path (PostgreSQL 17+).
+
 -- days
 
 CREATE OR REPLACE FUNCTION days(
@@ -69,7 +72,7 @@ BEGIN
         RETURN raw_weeks(p_from, p_to);
     END IF;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- season_start
@@ -120,7 +123,7 @@ BEGIN
 		RETURN 1;
 	END IF;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- next_season_weeks
@@ -147,7 +150,7 @@ BEGIN
 		RETURN 0;
 	END IF;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- tournament_end
@@ -178,7 +181,7 @@ CREATE OR REPLACE FUNCTION player_rank(
 BEGIN
 	RETURN (SELECT rank FROM player_ranking WHERE player_id = p_player_id AND rank_date BETWEEN p_date - (INTERVAL '1 year') AND p_date ORDER BY rank_date DESC LIMIT 1);
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- player_rank_points
@@ -190,7 +193,7 @@ CREATE OR REPLACE FUNCTION player_rank_points(
 BEGIN
 	RETURN (SELECT (r.rank, r.rank_points) FROM player_ranking r WHERE player_id = p_player_id AND rank_date BETWEEN p_date - (INTERVAL '1 year') AND p_date ORDER BY rank_date DESC LIMIT 1);
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- adjust_atp_rank_points
@@ -218,7 +221,7 @@ BEGIN
 	WHERE player_id = p_player_id AND rank_date BETWEEN p_date - (INTERVAL '1 year') AND p_date ORDER BY rank_date DESC LIMIT 1;
 	RETURN l_elo_rating;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- player_elo_ratings
@@ -239,7 +242,7 @@ BEGIN
 		ORDER BY rank_date DESC LIMIT 1
 	);
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- performance_min_entries
@@ -250,7 +253,7 @@ CREATE OR REPLACE FUNCTION performance_min_entries(
 BEGIN
 	RETURN (SELECT min_entries FROM performance_category WHERE category_id = p_category_id);
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- statistics_min_entries
@@ -261,7 +264,7 @@ CREATE OR REPLACE FUNCTION statistics_min_entries(
 BEGIN
 	RETURN (SELECT min_entries FROM statistics_category WHERE category_id = p_category_id);
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- max_event_participation
@@ -281,7 +284,7 @@ BEGIN
 	END LOOP;
 	RETURN l_max_participation;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- estimate_draw_size
@@ -319,7 +322,7 @@ BEGIN
 	   RETURN l_player_count;
 	END IF;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog, public, pg_temp;
 
 
 -- tournament_level_factor

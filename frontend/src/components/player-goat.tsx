@@ -161,7 +161,7 @@ export function PlayerGoat({ id }: { id: string }) {
                       </td>
                       <td>
                         <details>
-                          <summary>Ventilation {s.season}</summary>
+                          <summary>Détails {s.season}</summary>
                           <dl className="goat-season-detail">
                             {(
                               [

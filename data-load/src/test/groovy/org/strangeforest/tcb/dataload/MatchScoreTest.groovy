@@ -97,6 +97,19 @@ class MatchScoreTest {
 	}
 
 	@Test
+	void 'Test match score with missing set separator'() {
+		def score = MatchScoreParser.parse('6-36-3')
+
+		assert score.w_sets == 2
+		assert score.l_sets == 0
+		assert score.setScores == [
+			new SetScore(w_games: 6, l_games: 3),
+			new SetScore(w_games: 6, l_games: 3)
+		]
+		assert score.toString() == '6-3 6-3'
+	}
+
+	@Test
 	void 'Test walk-over'() {
 		def score = MatchScoreParser.parse('W/O')
 

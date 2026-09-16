@@ -7,6 +7,7 @@ class MatchScoreParser {
 	static MatchScore parse(String score) {
 		if (!score || score == 'UNK')
 			return null
+		score = score.replaceAll(/(?<=-\d)(?=\d+-\d)/, ' ')
 		List sets = score.tokenize(' ')
 		short w_sets = 0
 		short l_sets = 0

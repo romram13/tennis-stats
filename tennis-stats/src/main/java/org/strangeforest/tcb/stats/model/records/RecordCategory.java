@@ -20,6 +20,7 @@ public abstract class RecordCategory {
 	protected static final String NO_3 = "No3";
 	protected static final String TOP_2 = "Top2";
 	protected static final String TOP_3 = "Top3";
+	protected static final String TOP_4 = "Top4";
 	protected static final String TOP_5 = "Top5";
 	protected static final String TOP_10 = "Top10";
 	protected static final String TOP_20 = "Top20";
@@ -29,6 +30,7 @@ public abstract class RecordCategory {
 	protected static final String NO_3_NAME = "No. 3";
 	protected static final String TOP_2_NAME = "Top 2";
 	protected static final String TOP_3_NAME = "Top 3";
+	protected static final String TOP_4_NAME = "Top 4";
 	protected static final String TOP_5_NAME = "Top 5";
 	protected static final String TOP_10_NAME = "Top 10";
 	protected static final String TOP_20_NAME = "Top 20";
@@ -47,6 +49,7 @@ public abstract class RecordCategory {
 	protected static final String TOP_2_RANK = "<= 2";
 	protected static final String NO_3_RANK = "= 3";
 	protected static final String TOP_3_RANK = "<= 3";
+	protected static final String TOP_4_RANK = "<= 4";
 	protected static final String TOP_5_RANK = "<= 5";
 	protected static final String TOP_10_RANK = "<= 10";
 	protected static final String TOP_20_RANK = "<= 20";

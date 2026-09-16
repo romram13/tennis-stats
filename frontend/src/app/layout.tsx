@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Tennis Stats — Le jeu, en chiffres",
   description:
-    "Explorez les classements ATP et Elo, les joueurs et leurs matchs.",
+    "Explorez le classement GOAT, le détail des points, les classements ATP et Elo.",
 };
 export default function RootLayout({
   children,
@@ -25,8 +25,9 @@ export default function RootLayout({
               TENNIS<span className="brand-light">STATS</span>
             </Link>
             <nav aria-label="Navigation principale">
-              <Link href="/">Classements</Link>
-              <Link href="/#recherche">
+              <Link href="/goat">GOAT</Link>
+              <Link href="/classements">ATP / Elo</Link>
+              <Link href="/classements#recherche">
                 Joueurs <span aria-hidden="true">↗</span>
               </Link>
             </nav>

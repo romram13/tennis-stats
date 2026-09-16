@@ -60,7 +60,7 @@ test("classements, pagination, recherche et profil avec filtre de saison", async
     else return route.fulfill({ status: 404, json: {} });
     return route.fulfill({ json: body });
   });
-  await page.goto("/");
+  await page.goto("/classements");
   await expect(
     page.getByRole("heading", { name: "Le classement", exact: true }),
   ).toBeVisible();
@@ -117,7 +117,7 @@ test("indisponibilité, nouvelle tentative et classement vide", async ({
             : { rows: [], total: 0 },
         }),
   );
-  await page.goto("/");
+  await page.goto("/classements");
   await expect(page.getByRole("main").getByRole("alert")).toContainText(
     "momentanément indisponibles",
   );

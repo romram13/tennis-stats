@@ -863,3 +863,291 @@ select {
     animation: none;
   }
 }
+
+/* GOAT: compact tables and the three historical point families. */
+.goat-page {
+  padding-top: 38px;
+  padding-bottom: 64px;
+}
+.goat-intro {
+  max-width: 850px;
+  margin-bottom: 28px;
+}
+.goat-intro h1 {
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  line-height: 1.1;
+  margin: 12px 0 18px;
+}
+.goat-intro p {
+  line-height: 1.7;
+}
+.goat-controls {
+  border: 1px solid #d6ddd3;
+  background: #fffef9;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 36px;
+}
+.goat-filter-grid,
+.goat-weights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.goat-controls label,
+.goat-surface {
+  display: grid;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.goat-controls input[type="search"],
+.goat-controls select,
+.goat-surface select {
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid #bccbbd;
+  border-radius: 7px;
+  background: white;
+  color: #19382d;
+  font: inherit;
+}
+.goat-weights {
+  margin: 20px 0;
+}
+.goat-weights label {
+  padding: 16px;
+  border-radius: 9px;
+  background: #edf4d7;
+}
+.goat-weights label:nth-child(2) {
+  background: #e4eefb;
+}
+.goat-weights label:nth-child(3) {
+  background: #fae8df;
+}
+.goat-advanced summary,
+.goat-legend summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 12px 0;
+}
+.goat-advanced p,
+.goat-legend p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.goat-controls .goat-check {
+  display: flex;
+  align-items: center;
+  margin-top: 18px;
+}
+.goat-check input {
+  width: 18px;
+  height: 18px;
+}
+.goat-actions,
+.goat-pagination,
+.goat-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.goat-actions {
+  margin-top: 22px;
+}
+.goat-actions span {
+  flex: 1 1 250px;
+  font-size: 0.8rem;
+  color: #536558;
+}
+.goat-page button {
+  cursor: pointer;
+  border: 1px solid #becbbd;
+  background: #fffef9;
+  border-radius: 7px;
+  padding: 10px 14px;
+  font: inherit;
+  color: #19382d;
+}
+.goat-page button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.goat-page button.goat-primary {
+  background: #19382d;
+  color: white;
+  border-color: #19382d;
+}
+.goat-section-heading {
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.goat-section-heading h2 {
+  margin: 0;
+}
+.goat-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #d6ddd3;
+  border-radius: 10px;
+  background: #fffef9;
+}
+.goat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.goat-table th,
+.goat-table td {
+  padding: 14px 12px;
+  text-align: right;
+  border-bottom: 1px solid #e2e8de;
+  white-space: nowrap;
+}
+.goat-table thead th {
+  background: #f0f3ea;
+  font-size: 0.75rem;
+}
+.goat-table th[scope="row"],
+.goat-table th:nth-child(2) {
+  text-align: left;
+}
+.goat-table th small {
+  display: block;
+  color: #657363;
+  font-weight: 400;
+  margin-top: 5px;
+}
+.goat-table th button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-weight: 600;
+}
+.goat-table tbody tr:hover {
+  background: #f7f9f0;
+}
+.goat-table .goat-tournament {
+  background: #edf4d780;
+}
+.goat-table .goat-ranking {
+  background: #e4eefb80;
+}
+.goat-table .goat-achievement {
+  background: #fae8df80;
+}
+.goat-total {
+  font-weight: 750;
+  color: #19382d;
+}
+.goat-pagination {
+  justify-content: flex-end;
+  padding: 20px 0;
+}
+.goat-message {
+  padding: 30px;
+  background: #fffef9;
+  border-radius: 10px;
+}
+.goat-breakdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 12px;
+  text-align: left;
+}
+.goat-breakdown dt {
+  font-size: 0.75rem;
+  color: #536558;
+}
+.goat-breakdown dd {
+  margin: 5px 0;
+  font-weight: 700;
+}
+.goat-legend {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #d6ddd3;
+  border-radius: 12px;
+}
+.goat-legend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.goat-surface {
+  max-width: 280px;
+  margin-bottom: 24px;
+}
+.goat-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 30px;
+}
+.goat-cards > div {
+  background: #19382d;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+.goat-cards > div:nth-child(2) {
+  background: #edf4d7;
+  color: #19382d;
+}
+.goat-cards > div:nth-child(3) {
+  background: #e4eefb;
+  color: #19382d;
+}
+.goat-cards > div:nth-child(4) {
+  background: #fae8df;
+  color: #19382d;
+}
+.goat-cards strong {
+  display: block;
+  font-size: 2rem;
+  margin-top: 12px;
+}
+.goat-season-detail div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.goat-results {
+  text-align: left;
+  padding-left: 20px;
+  line-height: 1.8;
+}
+.goat-page :focus-visible {
+  outline: 3px solid #638137;
+  outline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .goat-controls {
+    padding: 16px;
+  }
+  .goat-filter-grid,
+  .goat-legend-grid {
+    grid-template-columns: 1fr;
+  }
+  .goat-weights {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .goat-weights label {
+    grid-template-columns: 1fr 90px;
+    align-items: center;
+  }
+  .goat-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  .goat-cards > div {
+    padding: 14px;
+    font-size: 0.8rem;
+  }
+  .goat-cards strong {
+    font-size: 1.6rem;
+  }
+}

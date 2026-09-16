@@ -5,7 +5,7 @@ Ce fork migre Ultimate Tennis Statistics vers un backend JSON destiné à un fro
 - Source CSV : [elitemajik-ship-it/tennis_atp](https://github.com/elitemajik-ship-it/tennis_atp).
 - API : `/api/v1`, services statistiques et base PostgreSQL existants conservés.
 - Ancien front Thymeleaf, jQuery et Bootstrap supprimé.
-- Nouveau front Next.js dans [`frontend/`](frontend/README.md).
+- Nouveau front Next.js dans [`frontend/`](frontend/README.md), centré sur le **classement GOAT**, ses pondérations et le détail des points par saison.
 - **Démarrage sans Docker : `./dev.sh`**, puis http://127.0.0.1:3000.
 - [Guide de développement local](docs/local-development.md).
 - [Import et périmètre de la migration backend](docs/backend-migration.md).

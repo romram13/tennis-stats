@@ -132,8 +132,22 @@ L'intégralité de l'import historique n'a pas été validée dans ce lot front/
 ## Vérifications réalisées
 
 - compilation de production Next.js et vérification TypeScript ;
-- six tests navigateur Chromium sur ordinateur et mobile ;
+- dix tests navigateur Chromium sur ordinateur et mobile, dont le parcours GOAT ;
 - démarrage réel PostgreSQL → API Java → Next.js ;
 - réponse du classement vide à travers le relais Next.js ;
 - initialisation atomique du schéma dans une base PostgreSQL neuve ;
 - arrêt libérant les trois ports et conservation du cluster pour le redémarrage.
+
+## Nouvelle interface GOAT
+
+L’accueil ouvre `/goat`. Les points restent calculés par le backend historique.
+La fiche GOAT d’un joueur sépare les points de saison des bonus de carrière.
+Voir [les fonctionnalités et contrats GOAT](../frontend/README.md#calcul-goat).
+
+Après une modification de l’API, arrêter le lanceur avec Ctrl+C puis relancer
+`./dev.sh` sans `--skip-build`. Si une autre application occupe le port 3000,
+utiliser `FRONTEND_PORT=3001 ./dev.sh` ; si c’est déjà ce projet, arrêter d’abord
+son lanceur pour libérer aussi le port de l’API.
+
+Le wrapper Gradle utilise 6.8.1, comme `gradle.properties` : Gradle 8.9 est
+incompatible avec le plugin Kotlin 1.4 actuel. Java 11 reste nécessaire.

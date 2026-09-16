@@ -78,6 +78,7 @@ export function PlayerProfile({ id }: { id: string }) {
             <div>
               <p className="eyebrow">LE PARCOURS D’UN JOUEUR</p>
               <h1>{player.name}</h1>
+              <Link href={`/joueurs/${id}/goat`}>Points GOAT et détail par saison →</Link>
               <p className="player-details">
                 {player.country?.id || "Pays non renseigné"}
                 {player.age ? ` · ${player.age} ans` : ""}

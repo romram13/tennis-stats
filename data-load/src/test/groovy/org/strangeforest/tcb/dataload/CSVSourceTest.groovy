@@ -42,6 +42,8 @@ class CSVSourceTest {
 	@Test void 'unsupported country codes do not abort player imports'() {
 		assert BaseCSVLoader.country('?', '???') == '???'
 		assert BaseCSVLoader.country('USA', '???') == 'USA'
+		assert BaseCSVLoader.country('BIR', '???') == 'BIR'
+		assert BaseCSVLoader.country('LEB', '???') == 'LEB'
 	}
 
 	@Test void 'preserves historical East Germany country in player imports'() {

@@ -1,0 +1,15 @@
+-- In tcb database as postgres user
+CREATE USER tcb WITH
+	LOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	INHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1
+	PASSWORD 'tcb';
+COMMENT ON ROLE tcb IS 'Tennis Crystal Ball';
+
+CREATE SCHEMA tcb AUTHORIZATION tcb;
+
+COMMENT ON SCHEMA tcb IS 'Tennis Crystal Ball';

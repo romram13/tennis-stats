@@ -20,6 +20,10 @@ subprojects {
 	sourceCompatibility = JavaVersion.VERSION_11
 	targetCompatibility = JavaVersion.VERSION_11
 
+	tasks.withType(JavaCompile) {
+		options.release = 11
+	}
+
 	remotes {
 		def home = System.properties['user.home']
 		digitalOcean {

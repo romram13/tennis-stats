@@ -1172,3 +1172,22 @@ select {
     font-size: 1.6rem;
   }
 }
+
+.record-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.record-breadcrumb a { color: var(--green); }
+.record-breadcrumb a:hover { text-decoration: underline; }
+.record-ranking-table th[scope="row"] {
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: normal;
+  border-bottom: 1px solid var(--line);
+}

@@ -9,6 +9,7 @@ const endpoints = new Set([
   "goatListTable",
   "goat/legend",
   "recordsTable",
+  "recordTable",
 ]);
 export async function GET(
   request: NextRequest,
@@ -18,7 +19,8 @@ export async function GET(
   const endpoint = path.join("/");
   if (
     !endpoints.has(endpoint) &&
-    !/^players\/[1-9]\d*(\/(seasons|goat))?$/.test(endpoint)
+    !/^players\/[1-9]\d*(\/(seasons|goat))?$/.test(endpoint) &&
+    !/^records\/[A-Za-z0-9]+$/.test(endpoint)
   ) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }

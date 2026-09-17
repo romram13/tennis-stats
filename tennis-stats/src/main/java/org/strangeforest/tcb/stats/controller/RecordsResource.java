@@ -1,5 +1,7 @@
 package org.strangeforest.tcb.stats.controller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 import org.strangeforest.tcb.stats.model.records.*;
@@ -15,6 +17,18 @@ public class RecordsResource {
 
 	private static final int MAX_RECORDS = 2000;
 	private static final int MAX_PLAYERS =  500;
+
+	@GetMapping("/records/{recordId}")
+	public Map<String, Object> record(@PathVariable("recordId") String recordId) {
+		var record = Records.getRecord(recordId);
+		var result = new LinkedHashMap<String, Object>();
+		result.put("id", record.getId());
+		result.put("name", record.getName());
+		result.put("category", record.getCategory().getName());
+		result.put("columns", record.getColumnInfos());
+		result.put("notes", record.getNotes());
+		return result;
+	}
 
 	@GetMapping("/recordsTable")
 	public BootgridTable<RecordRow> recordsTable(

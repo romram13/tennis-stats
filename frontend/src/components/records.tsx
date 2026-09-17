@@ -69,7 +69,7 @@ export function Records() {
                 <caption className="sr-only">Records et détenteurs</caption>
                 <thead><tr><th scope="col">Record</th><th scope="col" className="numeric">Valeur</th><th scope="col">Détenteurs</th><th scope="col" className="numeric">Points GOAT</th></tr></thead>
                 <tbody>{data.rows.map((record) => <tr key={record.id}>
-                  <th scope="row">{record.name}</th>
+                  <th scope="row"><Link className="player-name" href={`/records/${encodeURIComponent(record.id)}`}>{record.name}</Link></th>
                   <td className="numeric points">{record.value || "—"}</td>
                   <td>{record.recordHolders.length ? <ul className="record-holders">{record.recordHolders.map((holder, index) => <li key={`${holder.playerId}-${index}`}>
                     <Link className="player-name" href={`/joueurs/${holder.playerId}`}>{holder.name}</Link>

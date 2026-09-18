@@ -1020,7 +1020,8 @@ BEGIN
 		INNER JOIN tournament_mapping m ON m.tournament_id = e.original_tournament_id
 		WHERE e.season = p_season AND m.ext_tournament_id = p_name;
 		IF l_tournament_event_id IS NULL THEN
-			RAISE EXCEPTION 'Tournament event % for season % not found', p_name, p_season;
+			RAISE NOTICE 'Skipping missing tournament event % for season %', p_name, p_season;
+			RETURN;
 		END IF;
 	END IF;
 

@@ -336,6 +336,7 @@ class ATPTennisLoader {
 	def correctDataFull(sql) {
 		def stopwatch = Stopwatch.createStarted()
 		print 'Correction des données (complète)'
+		executeSQLFile(sql, '/load-functions.sql')
 		executeSQLFile(sql, '/correct-data-full.sql')
 		println " finished in $stopwatch"
 
@@ -349,6 +350,7 @@ class ATPTennisLoader {
 	def correctData(sql) {
 		def stopwatch = Stopwatch.createStarted()
 		print 'Correction des données (delta)'
+		executeSQLFile(sql, '/load-functions.sql')
 		executeSQLFile(sql, '/correct-data-delta.sql')
 		println " finished in $stopwatch"
 

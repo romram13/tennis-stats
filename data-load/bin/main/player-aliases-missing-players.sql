@@ -109,6 +109,7 @@ VALUES
 ('Richard Leach Sr', 'Richard Leach'),
 ('Rick Meyer', 'Rick Meyers'),
 ('Robert Casey', 'Robert Casey C100'),
+('Robert Lutz', 'Bob Lutz'),
 ('Robert Stuckert', 'Bob Stuckert'),
 ('Roberto Cid Subervi', 'Roberto Cid'),
 ('Roland Russo', 'Ronald Russo'),

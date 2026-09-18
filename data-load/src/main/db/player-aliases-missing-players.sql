@@ -196,6 +196,7 @@ DO $$ BEGIN
     CALL create_player('Philip', 'Holton', NULL, 'AUS');
     CALL create_player('Ramon', 'Blanco', NULL, 'VEN');
     CALL create_player('Richard', 'Browne', NULL, 'USA');
+    CALL create_player('Richard Pancho', 'Gonzales', NULL, 'USA');
     CALL create_player('Richard', 'Rae', NULL, 'NZL');
     CALL create_player('Rodney', 'Kop', NULL, 'USA');
     CALL create_player('Roger', 'Cooper', NULL, 'USA');

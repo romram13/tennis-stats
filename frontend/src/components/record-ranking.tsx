@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api, date, number, type Country, type Page } from "@/lib/api";
+import { CountryFlag } from "@/components/country-flag";
 
 type Column = { name: string; caption: string; align?: string; formatter?: string | null };
 type Definition = { id: string; name: string; category: string; notes?: string; columns: Column[] };
@@ -80,7 +81,7 @@ export function RecordRanking({ id }: { id: string }) {
                 </tr></thead>
                 <tbody>{data.rows.map((row, index) => <tr key={`${row.playerId}-${index}`}>
                   <td><span className={`rank ${row.rank <= 3 ? "top-rank" : ""}`}>{number(row.rank)}</span></td>
-                  <td><span className="country" title={row.country?.name}>{row.country?.id || "—"}</span></td>
+                  <td><CountryFlag country={row.country} /></td>
                   <th scope="row"><Link className="player-name" href={`/joueurs/${row.playerId}`}>{row.name}</Link></th>
                   {definition?.columns.map((column) => <td key={column.name} className={column.align === "right" ? "numeric" : undefined}>{cell(row[column.name], column)}</td>)}
                 </tr>)}</tbody>

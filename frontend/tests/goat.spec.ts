@@ -163,3 +163,33 @@ test("GOAT : erreur, réessai, résultat vide, réinitialisation et barème", as
     page.getByRole("cell", { name: "800", exact: true }),
   ).toBeVisible();
 });
+
+test("GOAT : regroupement par pays", async ({ page }) => {
+  await page.route("**/api/tennis/**", (route) => {
+    if (route.request().url().endsWith("goatListTable?rowCount=0"))
+      return route.fulfill({
+        json: {
+          total: 3,
+          rows: [
+            { ...row, playerId: 1, name: "Alex Test", totalPoints: 900 },
+            { ...row, playerId: 2, name: "Sam Test", totalPoints: 600 },
+            {
+              ...row,
+              playerId: 3,
+              name: "Taylor Test",
+              country: { id: "USA" },
+              totalPoints: 1000,
+            },
+          ],
+        },
+      });
+    return route.fulfill({ status: 404, json: {} });
+  });
+  await page.goto("/goat/pays");
+  await expect(
+    page.getByRole("heading", { name: "Classement par pays" }),
+  ).toBeVisible();
+  await expect(page.getByRole("row", { name: /FRA.*2.*1\s?500/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Alex Test" })).toBeVisible();
+  await expect(page.getByRole("row", { name: /USA.*1.*1\s?000/ })).toBeVisible();
+});

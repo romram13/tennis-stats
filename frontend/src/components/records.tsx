@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { api, number, type Country, type Page } from "@/lib/api";
+import { CountryFlag } from "@/components/country-flag";
 
 type TennisRecord = {
   id: string;
@@ -73,7 +74,7 @@ export function Records() {
                   <td className="numeric points">{record.value || "—"}</td>
                   <td>{record.recordHolders.length ? <ul className="record-holders">{record.recordHolders.map((holder, index) => <li key={`${holder.playerId}-${index}`}>
                     <Link className="player-name" href={`/joueurs/${holder.playerId}`}>{holder.name}</Link>
-                    {holder.country?.id && <span className="country"> · {holder.country.id}</span>}
+                    {holder.country && <CountryFlag country={holder.country} />}
                     {holder.detail && <small>{holder.detail}</small>}
                   </li>)}</ul> : <span className="muted">Résultat non disponible</span>}</td>
                   <td className="numeric">{record.goatPoints || "—"}</td>

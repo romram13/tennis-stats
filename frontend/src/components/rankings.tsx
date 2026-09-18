@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api, date, number, type Page, type Ranking } from "@/lib/api";
+import { CountryFlag } from "@/components/country-flag";
 export function Rankings() {
   const [type, setType] = useState("RANK");
   const [page, setPage] = useState(1);
@@ -132,9 +133,7 @@ export function Rankings() {
                         </Link>
                       </td>
                       <td>
-                        <span className="country" title={row.country?.name}>
-                          {row.country?.id || "—"}
-                        </span>
+                        <CountryFlag country={row.country} />
                       </td>
                       <td className="numeric points">{number(row.points)}</td>
                       <td className="numeric muted">{number(row.bestRank)}</td>

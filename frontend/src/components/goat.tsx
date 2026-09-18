@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { api, number, type Page, type Country } from "@/lib/api";
+import { CountryFlag } from "@/components/country-flag";
 
 export const surfaces = [
   ["", "Toutes les surfaces"],
@@ -198,6 +199,9 @@ export function GoatRanking() {
           donnez votre poids aux tournois, au classement et aux
           accomplissements.
         </p>
+        <Link className="text-link" href="/goat/pays">
+          Voir le classement GOAT par pays →
+        </Link>
       </header>
       <form
         key={query}
@@ -401,7 +405,7 @@ function GoatRows({
             {row.name}
           </Link>
           <small>
-            {row.country?.id}
+            <CountryFlag country={row.country} fallback="Pays inconnu" />
             {row.active ? " · En activité" : ""}
           </small>
         </th>

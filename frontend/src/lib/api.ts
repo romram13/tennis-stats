@@ -1,4 +1,4 @@
-export type Country = { id: string; name?: string };
+export type Country = { id: string; code?: string; name?: string };
 export type Ranking = {
   rank: number;
   playerId: number;

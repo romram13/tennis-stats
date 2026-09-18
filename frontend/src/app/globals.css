@@ -444,12 +444,15 @@ tbody tr:hover {
   text-underline-offset: 4px;
 }
 .country {
-  font-size: 10px;
-  letter-spacing: 0.6px;
-  background: #f3f5ef;
   padding: 5px 7px;
-  border-radius: 3px;
-  color: var(--muted);
+}
+.country-flag {
+  display: inline-block;
+  width: 20px;
+  height: 15px;
+  margin-right: 6px;
+  vertical-align: -4px;
+  object-fit: cover;
 }
 .numeric {
   text-align: right;
@@ -902,6 +905,10 @@ select {
 .goat-intro p {
   line-height: 1.7;
 }
+.text-link {
+  color: #19382d;
+  font-weight: 700;
+}
 .goat-controls {
   border: 1px solid #d6ddd3;
   background: #fffef9;
@@ -1063,6 +1070,12 @@ select {
 .goat-total {
   font-weight: 750;
   color: #19382d;
+}
+.country-goat-table th:nth-child(2),
+.country-goat-table td:nth-child(2),
+.country-goat-table th:nth-child(5),
+.country-goat-table td:nth-child(5) {
+  text-align: left;
 }
 .goat-pagination {
   justify-content: flex-end;

@@ -26,6 +26,7 @@ export default function RootLayout({
             </Link>
             <nav aria-label="Navigation principale">
               <Link href="/goat">GOAT</Link>
+              <Link href="/goat/pays">GOAT par pays</Link>
               <Link href="/classements">ATP / Elo</Link>
               <Link href="/records">Records</Link>
               <Link href="/classements#recherche">

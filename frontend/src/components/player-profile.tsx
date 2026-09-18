@@ -9,6 +9,7 @@ import {
   type Match,
   type Page,
 } from "@/lib/api";
+import { CountryFlag } from "@/components/country-flag";
 const surfaces: Record<string, string> = {
   H: "Dur",
   C: "Terre battue",
@@ -80,7 +81,7 @@ export function PlayerProfile({ id }: { id: string }) {
               <h1>{player.name}</h1>
               <Link href={`/joueurs/${id}/goat`}>Points GOAT et détail par saison →</Link>
               <p className="player-details">
-                {player.country?.id || "Pays non renseigné"}
+                <CountryFlag country={player.country} fallback="Pays non renseigné" />
                 {player.age ? ` · ${player.age} ans` : ""}
                 {player.height ? ` · ${player.height} cm` : ""}
                 {player.handName

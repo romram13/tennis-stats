@@ -18,13 +18,13 @@ class ATPTennisLoader {
 	}
 
 	def loadPlayers(loader) {
-		println 'Loading players'
+		println 'Chargement des joueurs'
 		loader.loadFile(baseDir() + 'atp_players.csv', true)
 		println()
 	}
 
 	def loadRankings(loader) {
-		println 'Loading rankings'
+		println 'Chargement des classements'
 		load {
 			def rows = 0
 			if (full)
@@ -36,7 +36,7 @@ class ATPTennisLoader {
 	}
 
 	def loadMatches(loader) {
-		println 'Loading matches'
+		println 'Chargement des matchs'
 		load {
 			def rows = 0
 			def files = dataFiles(~/atp_matches_\d{4}\.csv/)
@@ -49,7 +49,7 @@ class ATPTennisLoader {
 	}
 
 	def loadMatchPrices(loader) {
-		println 'Loading match prices'
+		println 'Chargement des cotes des matchs'
 		load {
 			def rows = 0
 			if (full) {
@@ -84,7 +84,7 @@ class ATPTennisLoader {
 		if (!baseDir) {
 			baseDir = System.properties[BASE_DIR_PROPERTY]
 			if (!baseDir)
-				throw new IllegalArgumentException("No Tennis data base directory is set, please specify it in $BASE_DIR_PROPERTY system property.")
+				throw new IllegalArgumentException("Aucun répertoire de base des données Tennis n'est défini, veuillez le spécifier dans la propriété système $BASE_DIR_PROPERTY.")
 			if (!baseDir.endsWith(File.separator))
 				baseDir += File.separator
 		}
@@ -93,26 +93,26 @@ class ATPTennisLoader {
 
 	def loadAdditionalPlayerData(Sql sql) {
 		if (full) {
-			println 'Loading additional player data'
+			println 'Chargement des données supplémentaires des joueurs'
 			new AdditionalPlayerDataLoader(sql).loadFile('classpath:/player-data.xml')
 
-			println 'Adding player aliases and missing players...'
+			println 'Ajout des alias des joueurs et des joueurs manquants...'
 			executeSQLFile(sql, '/player-aliases-missing-players.sql')
 		}
 	}
 
 	def loadAdditionalRankingData(Sql sql) {
 		if (full) {
-			println 'Fixing rank points...'
+			println 'Correction des points de classement...'
 			executeSQLFile(sql, '/fix-rank-points.sql')
-			println 'Loading pre-ATP rankings...'
+			println 'Chargement des classements pré-ATP...'
 			executeSQLFile(sql, '/rankings-pre-atp.sql')
 		}
 	}
 
 	def loadAdditionalTournamentData(Sql sql) {
 		if (full) {
-			println 'Loading additional match data'
+			println 'Chargement des données supplémentaires des matchs'
 
 			def atpTourMatchLoader = new ATPTourTournamentLoader(sql)
 			atpTourMatchLoader.loadTournament(1968, 'bloemfontein', 9343, false, 'B', 'H', '1968-01-08', ['R32', 'R64'], 'Bloemfontein')
@@ -335,24 +335,24 @@ class ATPTennisLoader {
 
 	def correctDataFull(sql) {
 		def stopwatch = Stopwatch.createStarted()
-		print 'Correcting data (full)'
+		print 'Correction des données (complète)'
 		executeSQLFile(sql, '/correct-data-full.sql')
 		println " finished in $stopwatch"
 
-		println 'Updating tournament event surfaces...'
+		println 'Mise à jour des surfaces des événements de tournoi...'
 		executeSQLFile(sql, '/tournament-event-surfaces.sql')
 
-		println 'Loading team tournament winners...'
+		println 'Chargement des vainqueurs des tournois par équipe...'
 		executeSQLFile(sql, '/team-tournament-winners.sql')
 	}
 
 	def correctData(sql) {
 		def stopwatch = Stopwatch.createStarted()
-		print 'Correcting data (delta)'
+		print 'Correction des données (delta)'
 		executeSQLFile(sql, '/correct-data-delta.sql')
 		println " finished in $stopwatch"
 
-		println 'Updating tournament event map properties...'
+		println 'Mise à jour des propriétés de la carte des événements de tournoi...'
 		executeSQLFile(sql, '/tournament-map-properties.sql')
 	}
 
@@ -375,7 +375,7 @@ class ATPTennisLoader {
 	}
 
 	def loadTeamTournamentWinners(Sql sql) {
-		println 'Loading team tournament winners...'
+		println 'Chargement des vainqueurs des tournois par équipe...'
 		executeSQLFile(sql, '/team-tournament-winners.sql')
 	}
 
@@ -384,7 +384,7 @@ class ATPTennisLoader {
 		for (String materializedView : materializedViews)
 			refreshMaterializedView(sql, materializedView)
 		if (materializedViews.length > 1)
-			println "Materialized views refreshed in $stopwatch"
+			println "Vues matérialisées actualisées en $stopwatch"
 	}
 
 	def refreshMaterializedView(Sql sql, String viewName) {
@@ -399,10 +399,10 @@ class ATPTennisLoader {
 	def installExtensions(Sql sql) {
 		def stopwatch = Stopwatch.createStarted()
 
-		println 'Installing extensions...'
+		println 'Installation des extensions...'
 		executeSQLFile(sql, '/create-extensions.sql')
 
-		println "Extensions installed in $stopwatch"
+		println "Extensions installées en $stopwatch"
 	}
 
 	def createDatabase(Sql sql) {
@@ -426,7 +426,7 @@ class ATPTennisLoader {
 		println 'Creating load functions...'
 		executeSQLFile(sql, '/load-functions.sql')
 
-		println "Database created in $stopwatch"
+		println "Base de données créée en $stopwatch"
 	}
 
 	def dropDatabase(Sql sql) {
@@ -447,13 +447,13 @@ class ATPTennisLoader {
 		println 'Dropping types...'
 		executeSQLFile(sql, '/drop-types.sql')
 
-		println "Database dropped in $stopwatch"
+		println "Base de données supprimée en $stopwatch"
 	}
 
 	def vacuum(Sql sql) {
 		def stopwatch = Stopwatch.createStarted()
 
-		println 'Vacuuming tables and materialized views...'
+		println 'Vidage des tables et des vues matérialisées...'
 		def tables = sql.rows('SELECT tablename FROM pg_tables WHERE schemaname IN (\'public\', \'tcb\') ORDER BY tablename')
 			.collect { row -> row.tablename }
 		def matViews = sql.rows('SELECT matviewname FROM pg_matviews WHERE schemaname IN (\'public\', \'tcb\') ORDER BY matviewname')
@@ -469,7 +469,7 @@ class ATPTennisLoader {
 			sql.connection.autoCommit = false
 		}
 
-		println "Vacuuming finished in $stopwatch"
+		println "Vidage terminé en $stopwatch"
 	}
 
 	private executeSQLFile(Sql sql, String file) {

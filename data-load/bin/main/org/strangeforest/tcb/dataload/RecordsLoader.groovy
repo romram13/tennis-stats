@@ -21,7 +21,7 @@ class RecordsLoader {
 	}
 
 	def loadRecords(ATPTennisLoader atpTennisLoader, Sql sql) {
-		println 'Loading records'
+		println 'Chargement des records'
 		def stopwatch = Stopwatch.createStarted()
 		atpTennisLoader.loadTeamTournamentWinners(sql)
 		doLoadRecords(Records.getRecordCategories(), 'famous')
@@ -36,7 +36,7 @@ class RecordsLoader {
 	}
 
 	private doLoadRecords(List<RecordCategory> categories, String name) {
-		println "Loading $name records"
+		println "Chargement des $name records"
 		def progress = createTicker()
 		def stopwatch = Stopwatch.createStarted()
 		for (RecordCategory recordCategory : categories) {
@@ -45,15 +45,15 @@ class RecordsLoader {
 				progress.tick()
 			}
 		}
-		println "\nLoading $name records finished in $stopwatch"
+		println "\nChargement des $name records terminé en $stopwatch"
 	}
 
 	private reloadRecordsGOATPointsRecords() {
-		print 'Reloading Records GOAT Points records'
+		print 'Rechargement des records GOAT Points'
 		def stopwatch = Stopwatch.createStarted()
 		doLoadRecords('GOATPoints', 'AchievementsGOATPoints', 'RecordsGOATPoints')
 		recordsService.clearActivePlayersRecords()
-		println "\nRecords GOAT Points records reloaded in $stopwatch"
+		println "\nRecords GOAT Points rechargés en $stopwatch"
 	}
 
 	private doLoadRecords(String... recordIds) {

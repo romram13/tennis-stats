@@ -29,4 +29,4 @@ sqlPool.withSql { sql -> new RecordsLoader().loadRecords(loader, sql) }
 
 sqlPool.withSql { sql -> loader.vacuum(sql) }
 
-println "Tennis Data loaded in $stopwatch"
+println "Données chargées en $stopwatch"

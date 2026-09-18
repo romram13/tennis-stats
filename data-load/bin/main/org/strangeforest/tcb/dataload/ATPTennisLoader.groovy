@@ -93,11 +93,11 @@ class ATPTennisLoader {
 
 	def loadAdditionalPlayerData(Sql sql) {
 		if (full) {
-			println 'Chargement des données supplémentaires des joueurs'
-			new AdditionalPlayerDataLoader(sql).loadFile('classpath:/player-data.xml')
-
 			println 'Ajout des alias des joueurs et des joueurs manquants...'
 			executeSQLFile(sql, '/player-aliases-missing-players.sql')
+
+			println 'Chargement des données supplémentaires des joueurs'
+			new AdditionalPlayerDataLoader(sql).loadFile('classpath:/player-data.xml')
 		}
 	}
 

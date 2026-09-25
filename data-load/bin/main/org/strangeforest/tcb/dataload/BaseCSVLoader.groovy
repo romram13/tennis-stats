@@ -72,7 +72,7 @@ abstract class BaseCSVLoader {
 		stopwatch.stop()
 		def seconds = stopwatch.elapsed(TimeUnit.SECONDS)
 		int rowsPerSecond = seconds ? rows / seconds : 0
-		println "Rows: $rows in $stopwatch ($rowsPerSecond row/s)"
+		println "Lignes : $rows en $stopwatch ($rowsPerSecond ligne/s)"
 	}
 
 	def load(Iterator data) {
@@ -102,7 +102,7 @@ abstract class BaseCSVLoader {
 						}
 					}
 					catch (Exception ex) {
-						throw new Exception("Error processing record $record", ex)
+						throw new Exception("Erreur lors du traitement de l'enregistrement $record", ex)
 					}
 				}
 				if (paramsBatch)
@@ -200,7 +200,7 @@ abstract class BaseCSVLoader {
 			c && Country.code(c) ? c : d
 		}
 		catch (IllegalArgumentException ignored) {
-			System.err.println "WARN: Unsupported country code '$c'; using '${d ?: 'null'}'"
+			System.err.println "AVERTISSEMENT : Code pays non pris en charge '$c'; utilisation de '${d ?: 'null'}'"
 			d
 		}
 	}

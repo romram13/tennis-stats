@@ -20,7 +20,7 @@ class ATPTourRankingsLoader {
 	def load(String rankDate, int playerCount, List skipPlayers = []) {
 		def parsedDate = date rankDate
 		def url = rankingsUrl(rankDate, playerCount)
-		println "Fetching rankings URL '$url'"
+		println "Récupération des classements à l'URL '$url'"
 		def stopwatch = Stopwatch.createStarted()
 		def doc = retriedGetDoc(url)
 		def paramsBatch = []
@@ -39,10 +39,10 @@ class ATPTourRankingsLoader {
 					}
 				}
 			}
-			println "$rankDate: ${paramsBatch.size()} rankings loaded in $stopwatch"
+			println "$rankDate : ${paramsBatch.size()} classements chargés en $stopwatch"
 		}
 		else
-			println "No rankings found for date $rankDate"
+			println "Aucun classement trouvé pour la date $rankDate"
 	}
 
 	static player(String name) {
@@ -77,7 +77,7 @@ class ATPTourRankingsLoader {
 
 	def delete(String rankDate) {
 		def count = sql.executeUpdate(['rankDate': rankDate], 'DELETE FROM player_ranking WHERE rank_date = :rankDate::DATE')
-		println "Deleted $count rankings for date $rankDate"
+		println "Suppression de $count classements pour la date $rankDate"
 	}
 
 

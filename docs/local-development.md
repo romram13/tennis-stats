@@ -147,7 +147,7 @@ JAVA_HOME="$PWD/.local/jdk-11" data-load/build/install/data-load/bin/data-load \
 ```
 
 Redémarrer ensuite `./dev.sh` pour vider les réponses mises en cache.
-`-rc` recalcule les vues et applique les corrections historiques de maintenance ;
+`-rc` recalcule les vues sans appliquer les corrections historiques de maintenance ;
 il ne reprend pas un import CSV interrompu et ne calcule ni les Elo (`-el`)
 ni les records (`-rr`). Leur absence laisse donc ces composantes GOAT incomplètes.
 

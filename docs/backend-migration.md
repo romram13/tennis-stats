@@ -103,7 +103,33 @@ Les commandes `-lt` et `-ln` n'exécutent plus les scrapers ATP/Wikipédia ni le
 de corrections destinés à l'ancien snapshot. Les commandes historiques explicites
 (`-nr`, `-nt`, `-lp`, etc.) et les jobs du profil `jobs` restent du code legacy :
 ne pas activer ce profil pour synchroniser les CSV. Les calculs Elo, vues matérialisées
-et records sont conservés après import.
+et records sont conservés après import. `-rc` actualise également les vues sans
+réappliquer les corrections historiques.
+
+Les imports excluent `player-aliases-missing-players.sql`, `player-data.xml`,
+`fix-rank-points.sql`, `rankings-pre-atp.sql`, les tournois XML/ATP complémentaires,
+`correct-data-full.sql`, `correct-data-delta.sql`, `tournament-event-surfaces.sql`
+et `tournament-map-properties.sql`. Les normalisations du lecteur CSV restent
+actives. Le référentiel local `team-tournament-winners.sql` reste utilisé par les
+calculs de titres par équipe : il ne recherche aucun joueur ni événement absent
+et ne déclenche aucun téléchargement. Les CSV de simples ne suffisent pas à
+reconstituer les vainqueurs des compétitions par équipe, qui incluent des doubles.
+
+La couverture historique et les points GOAT peuvent donc différer de l'ancien
+site, notamment pour les classements pré-ATP et les événements absents des CSV.
+Une base existante conserve les anciens enrichissements déjà importés ; relancer
+l'import ne les supprime pas et ne garantit pas un résultat identique à une base
+neuve alimentée uniquement par le nouveau pipeline.
+
+Après mise à jour du code, reconstruire impérativement l'importeur avant de
+reprendre un import échoué (sans supprimer la base) :
+
+```sh
+./gradlew :data-load:installDist
+```
+
+Puis relancer `-bd "$PWD/data/tennis_atp" -f -lt` avec les paramètres de connexion
+habituels. La reprise recalcule les Elo, vues et records après lecture des CSV.
 
 Les procédures SQL historiques restent en place : elles ne garantissent pas la
 propagation de toutes les corrections (certains champs joueurs ne sont complétés

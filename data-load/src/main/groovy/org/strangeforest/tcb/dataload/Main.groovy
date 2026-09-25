@@ -16,8 +16,8 @@ cli.d('Delta load')
 cli.ie('Installer les extensions de la base de données')
 cli.dd('Drop database objects')
 cli.cd('Créer les objets de la base de données')
-cli.lt('Charger toutes les données de tennis')
-cli.ln('Charger les nouvelles données de tennis')
+cli.lt('Charger les données CSV locales et recalculer les statistiques')
+cli.ln('Charger les données CSV locales en mode delta')
 cli.lp('Charger des données supplémentaires sur les joueurs')
 cli.la('Charger les classements et tournois ad hoc')
 cli.nr('Charger les nouveaux classements')
@@ -62,7 +62,6 @@ if (options && (options.ie || options.dd || options.cd || options.lt || options.
 	if (options.el)
 		new ComputeEloRatings().run()
 	if (options.rc) {
-		callLoader('correctData')
 		callLoader('refreshMaterializedViews')
 	}
 	if (options.rr) {

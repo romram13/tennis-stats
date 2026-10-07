@@ -257,6 +257,11 @@ def main():
             jars = list((ROOT / "tennis-stats/build/libs").glob("*-api.jar"))
             if len(jars) != 1:
                 raise RuntimeError("JAR API absent ou ambigu. Nettoyez les anciens JAR et relancez sans --skip-build.")
+            # Keep the running API independent of subsequent Gradle builds.
+            # Spring loads classes lazily from the JAR throughout its lifetime.
+            runtime_jar = LOCAL / "runtime" / jars[0].name
+            runtime_jar.parent.mkdir(exist_ok=True)
+            shutil.copy2(jars[0], runtime_jar)
             start_postgres()
             importer = ROOT / "data-load/build/install/data-load/bin/data-load"
             if not importer.exists():
@@ -271,7 +276,7 @@ def main():
                        SPRING_DATASOURCE_USERNAME="tcb", SPRING_DATASOURCE_PASSWORD=os.environ.get("DB_PASSWORD", "tcb"),
                        SERVER_ADDRESS="127.0.0.1", SERVER_PORT=str(api_port), SPRING_PROFILES_ACTIVE="local")
             say(f"Démarrage de l’API sur http://127.0.0.1:{api_port}…")
-            spawn("api", [java / "bin/java", "-Xmx512m", "-jar", jars[0]], env)
+            spawn("api", [java / "bin/java", "-Xmx512m", "-jar", runtime_jar], env)
             wait_http(f"http://127.0.0.1:{api_port}/actuator/health", 120, healthy=True)
         fingerprint = hashlib.sha256((ROOT / "frontend/package-lock.json").read_bytes()).hexdigest()
         marker = LOCAL / "frontend-dependencies.sha256"

@@ -10,10 +10,11 @@ type TennisRecord = {
   name: string;
   value: string;
   goatPoints?: string | null;
+  details?: string[];
   recordHolders: { playerId: number; name: string; country?: Country; detail?: string }[];
 };
 
-export function Records() {
+export function Records({ playerId }: { playerId?: string }) {
   const [draft, setDraft] = useState("");
   const [search, setSearch] = useState("");
   const [infamous, setInfamous] = useState(false);
@@ -30,12 +31,13 @@ export function Records() {
     const query = new URLSearchParams({
       searchPhrase: search, infamous: String(infamous), current: String(page), rowCount: "20",
     });
-    api<Page<TennisRecord>>(`recordsTable?${query}`, controller.signal)
+    if (playerId) query.set("playerId", playerId);
+    api<Page<TennisRecord>>(`${playerId ? "playerRecordsTable" : "recordsTable"}?${query}`, controller.signal)
       .then((result) => { if (!controller.signal.aborted) setData(result); })
       .catch((reason) => { if (!controller.signal.aborted) setError(reason.message); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [search, infamous, page, reload]);
+  }, [search, infamous, page, reload, playerId]);
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,7 +46,7 @@ export function Records() {
   }
 
   return (
-    <section aria-label="Catalogue des records">
+    <section aria-label={playerId ? "Records du joueur" : "Catalogue des records"}>
       <form className="goat-controls" onSubmit={submit}>
         <div className="records-filters">
           <label>Rechercher un record
@@ -67,17 +69,19 @@ export function Records() {
           : <>
             <div className="table-scroll">
               <table className="records-table">
-                <caption className="sr-only">Records et détenteurs</caption>
-                <thead><tr><th scope="col">Record</th><th scope="col" className="numeric">Valeur</th><th scope="col">Détenteurs</th><th scope="col" className="numeric">Points GOAT</th></tr></thead>
+                <caption className="sr-only">{playerId ? "Records détenus par ce joueur" : "Records et détenteurs"}</caption>
+                <thead><tr><th scope="col">Record</th><th scope="col" className="numeric">Valeur</th><th scope="col">{playerId ? "Codétenteurs" : "Détenteurs"}</th>{!playerId && <th scope="col" className="numeric">Points GOAT</th>}</tr></thead>
                 <tbody>{data.rows.map((record) => <tr key={record.id}>
                   <th scope="row"><Link className="player-name" href={`/records/${encodeURIComponent(record.id)}`}>{record.name}</Link></th>
-                  <td className="numeric points">{record.value || "—"}</td>
+                  <td className="numeric points">{record.value || "—"}
+                    {playerId && record.details?.map((detail, index) => <small className="player-record-detail" key={index}>{detail}</small>)}
+                  </td>
                   <td>{record.recordHolders.length ? <ul className="record-holders">{record.recordHolders.map((holder, index) => <li key={`${holder.playerId}-${index}`}>
                     <Link className="player-name" href={`/joueurs/${holder.playerId}`}>{holder.name}</Link>
                     {holder.country && <CountryFlag country={holder.country} />}
                     {holder.detail && <small>{holder.detail}</small>}
-                  </li>)}</ul> : <span className="muted">Résultat non disponible</span>}</td>
-                  <td className="numeric">{record.goatPoints || "—"}</td>
+                  </li>)}</ul> : <span className="muted">{playerId ? "Seul détenteur" : "Résultat non disponible"}</span>}</td>
+                  {!playerId && <td className="numeric">{record.goatPoints || "—"}</td>}
                 </tr>)}</tbody>
               </table>
             </div>

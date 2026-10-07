@@ -10,6 +10,8 @@ import {
   type Page,
 } from "@/lib/api";
 import { PlayerTitles } from "@/components/player-titles";
+import { PlayerTabs } from "@/components/player-tabs";
+import { Records } from "@/components/records";
 import { CountryFlag } from "@/components/country-flag";
 const surfaces: Record<string, string> = {
   H: "Dur",
@@ -17,7 +19,7 @@ const surfaces: Record<string, string> = {
   G: "Gazon",
   P: "Moquette",
 };
-export function PlayerProfile({ id }: { id: string }) {
+export function PlayerProfile({ id, tab = "profile" }: { id: string; tab?: "profile" | "records" }) {
   const [player, setPlayer] = useState<Player | null>(null);
   const [seasons, setSeasons] = useState<number[]>([]);
   const [season, setSeason] = useState("");
@@ -44,6 +46,7 @@ export function PlayerProfile({ id }: { id: string }) {
     return () => controller.abort();
   }, [id, reload]);
   useEffect(() => {
+    if (tab === "records") return;
     const controller = new AbortController();
     setMatches(null);
     setMatchError("");
@@ -56,7 +59,7 @@ export function PlayerProfile({ id }: { id: string }) {
         if (!controller.signal.aborted) setMatchError(reason.message);
       });
     return () => controller.abort();
-  }, [id, season, page, reload]);
+  }, [id, season, page, reload, tab]);
   return (
     <div className="container profile">
       <Link className="back" href="/">
@@ -80,7 +83,6 @@ export function PlayerProfile({ id }: { id: string }) {
             <div>
               <p className="eyebrow">LE PARCOURS D’UN JOUEUR</p>
               <h1>{player.name}</h1>
-              <Link href={`/joueurs/${id}/goat`}>Points GOAT et détail par saison →</Link>
               <p className="player-details">
                 <CountryFlag country={player.country} fallback="Pays non renseigné" />
                 {player.age ? ` · ${player.age} ans` : ""}
@@ -98,6 +100,19 @@ export function PlayerProfile({ id }: { id: string }) {
                 .join("")}
             </span>
           </section>
+          <PlayerTabs id={id} active={tab} />
+          {tab === "records" ? (
+            <section aria-labelledby="player-records-heading">
+              <div className="section-heading">
+                <div>
+                  <p className="eyebrow">LES PERFORMANCES HISTORIQUES</p>
+                  <h2 id="player-records-heading">Records de {player.name}</h2>
+                  <p>Records détenus, seuls ou à égalité avec d’autres joueurs.</p>
+                </div>
+              </div>
+              <Records key={id} playerId={id} />
+            </section>
+          ) : <>
           <div className="metrics">
             {[
               ["Classement ATP", number(player.currentRank)],
@@ -215,6 +230,7 @@ export function PlayerProfile({ id }: { id: string }) {
               Scores présentés dans l’ordre vainqueur–perdant.
             </p>
           </section>
+          </>}
         </>
       )}
     </div>

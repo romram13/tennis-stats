@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { api, number, type Player } from "@/lib/api";
 import { PlayerTitles } from "@/components/player-titles";
+import { PlayerTabs } from "@/components/player-tabs";
 import { levels, surfaces, type Totals } from "./goat";
 
 type Result = {
@@ -59,8 +60,8 @@ export function PlayerGoat({ id }: { id: string }) {
       </Link>
       <header className="goat-intro">
         <h1>{data?.player.name || "JOUEUR"}</h1>
-        <Link href={`/joueurs/${id}`}>Profil et matchs →</Link>
       </header>
+      <PlayerTabs id={id} active="goat" />
       <label className="goat-surface">
         Surface
         <select

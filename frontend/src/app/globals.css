@@ -657,6 +657,30 @@ footer a:hover {
 .profile-titles {
   margin-bottom: 48px;
 }
+.player-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 32px;
+}
+.player-tabs a {
+  padding: 12px 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+}
+.player-tabs a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: currentColor;
+  font-weight: 600;
+}
+.player-record-detail {
+  display: block;
+  margin-top: 6px;
+  font-weight: 400;
+  white-space: normal;
+  color: var(--muted);
+}
 .title-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

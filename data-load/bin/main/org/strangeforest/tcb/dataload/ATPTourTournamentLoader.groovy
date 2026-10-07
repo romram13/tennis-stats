@@ -404,7 +404,7 @@ class ATPTourTournamentLoader extends BaseATPTourTournamentLoader {
 				}
 			}
 		}
-		println "${matchesWoStats.size()} match stats loaded in $stopwatch"
+		println "${matchesWoStats.size()} matchs avec statistiques chargés en $stopwatch"
 	}
 
 	private static Map findMatch(List matches, String winner, String loser, List aliases) {

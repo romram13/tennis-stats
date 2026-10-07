@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { api, number, type Player } from "@/lib/api";
+import { PlayerTitles } from "@/components/player-titles";
 import { levels, surfaces, type Totals } from "./goat";
 
 type Result = {
@@ -105,6 +106,7 @@ export function PlayerGoat({ id }: { id: string }) {
           {!data.points.totalPoints && (
             <p>Aucun point GOAT disponible pour ce joueur et cette surface.</p>
           )}
+          <PlayerTitles player={data.player} />
           <h2>Bonus de carrière</h2>
           <p>
             Classement :{" "}

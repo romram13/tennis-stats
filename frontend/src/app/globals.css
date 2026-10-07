@@ -654,6 +654,33 @@ footer a:hover {
   font-size: 32px;
   letter-spacing: -1px;
 }
+.profile-titles {
+  margin-bottom: 48px;
+}
+.title-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  overflow: hidden;
+  margin: 0;
+}
+.title-metric {
+  background: white;
+  padding: 25px;
+}
+.title-metric dt {
+  font-size: 12px;
+  color: var(--muted);
+}
+.title-metric dd {
+  margin: 15px 0 0;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -1px;
+}
 .season-label {
   display: flex;
   align-items: center;
@@ -834,6 +861,12 @@ select {
   }
   .metrics {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .title-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .title-metric {
+    padding: 22px;
   }
   .metric:nth-child(2) {
     border-right: 0;

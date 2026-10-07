@@ -40,6 +40,8 @@ public class Player {
 	private int altFinals;
 	private int masters;
 	private int olympics;
+	private int atp500;
+	private int atp250;
 
 	// Ranking
 	private int currentRank;
@@ -302,6 +304,22 @@ public class Player {
 
 	public void setOlympics(int olympics) {
 		this.olympics = olympics;
+	}
+
+	public int getAtp500() {
+		return atp500;
+	}
+
+	public void setAtp500(int atp500) {
+		this.atp500 = atp500;
+	}
+
+	public int getAtp250() {
+		return atp250;
+	}
+
+	public void setAtp250(int atp250) {
+		this.atp250 = atp250;
 	}
 
 

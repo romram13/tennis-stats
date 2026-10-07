@@ -25,6 +25,11 @@ export type Player = {
   bestRank?: number;
   titles?: number;
   grandSlams?: number;
+  tourFinals?: number;
+  masters?: number;
+  olympics?: number;
+  atp500?: number;
+  atp250?: number;
   currentEloRating?: number;
 };
 export type Match = {

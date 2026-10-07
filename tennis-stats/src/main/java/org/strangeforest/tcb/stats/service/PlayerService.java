@@ -34,11 +34,16 @@ public class PlayerService {
 	private static final String PLAYER_BY_ID_QUERY =
 		"SELECT player_id, name, dob, dod, extract(YEAR FROM age) AS age, country_id, birthplace, residence, height, weight,\n" +
 		"  hand, backhand, active, turned_pro, coach, prize_money, wikipedia, web_site, facebook, twitter, nicknames,\n" +
-		"  titles, grand_slams, tour_finals, alt_finals, masters, olympics,\n" +
+		"  titles, grand_slams, tour_finals, alt_finals, masters, olympics, atp500, atp250,\n" +
 		"  current_rank, current_rank_points, best_rank, best_rank_date,\n" +
 		"  current_elo_rank, current_elo_rating, best_elo_rank, best_elo_rank_date, best_elo_rating, best_elo_rating_date,\n" +
 		"  goat_rank, goat_points, weeks_at_no1\n" +
-		"FROM player_v\n" +
+		"FROM player_v p\n" +
+		"LEFT JOIN LATERAL (\n" +
+		"  SELECT count(*) FILTER (WHERE e.level = 'A') AS atp500, count(*) FILTER (WHERE e.level = 'B') AS atp250\n" +
+		"  FROM player_tournament_event_result r INNER JOIN tournament_event e USING (tournament_event_id)\n" +
+		"  WHERE r.player_id = p.player_id AND r.result = 'W' AND e.level IN ('A', 'B')\n" +
+		") category_titles ON TRUE\n" +
 		"WHERE player_id = :playerId";
 	
 	private static final String PLAYER_ID_BY_NAME_QUERY =
@@ -279,6 +284,8 @@ public class PlayerService {
 		p.setAltFinals(rs.getInt("alt_finals"));
 		p.setMasters(rs.getInt("masters"));
 		p.setOlympics(rs.getInt("olympics"));
+		p.setAtp500(rs.getInt("atp500"));
+		p.setAtp250(rs.getInt("atp250"));
 
 		p.setCurrentRank(rs.getInt("current_rank"));
 		p.setCurrentRankPoints(rs.getInt("current_rank_points"));

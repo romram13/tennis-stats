@@ -9,6 +9,7 @@ import {
   type Match,
   type Page,
 } from "@/lib/api";
+import { PlayerTitles } from "@/components/player-titles";
 import { CountryFlag } from "@/components/country-flag";
 const surfaces: Record<string, string> = {
   H: "Dur",
@@ -102,7 +103,7 @@ export function PlayerProfile({ id }: { id: string }) {
               ["Classement ATP", number(player.currentRank)],
               ["Meilleur rang", number(player.bestRank)],
               ["Titres", number(player.titles, true)],
-              ["Grands Chelems", number(player.grandSlams, true)],
+              ["Indice Elo", number(player.currentEloRating)],
             ].map(([label, value]) => (
               <div className="metric" key={label}>
                 <span>{label}</span>
@@ -110,6 +111,7 @@ export function PlayerProfile({ id }: { id: string }) {
               </div>
             ))}
           </div>
+          <PlayerTitles player={player} />
           <section className="matches">
             <div className="section-heading">
               <div>

@@ -54,7 +54,7 @@ test("GOAT : pondérations, pagination, URL, tri et détail standard par saison"
         },
       });
     if (url.pathname.endsWith("/players/1"))
-      return route.fulfill({ json: { id: 1, name: row.name } });
+      return route.fulfill({ json: { id: 1, name: row.name, grandSlams: 10, tourFinals: 1, masters: 3, olympics: 0, atp500: 8, atp250: 8 } });
     return route.fulfill({ status: 404, json: {} });
   });
   await page.goto("/");
@@ -124,6 +124,11 @@ test("GOAT : pondérations, pagination, URL, tri et détail standard par saison"
     .click();
   await expect(page.getByRole("heading", { name: row.name })).toBeVisible();
   await expect(page).toHaveURL(/joueurs\/1\/goat\?surface=C/);
+  const titles = page.getByRole("region", { name: "Titres remportés" });
+  await expect(titles.locator(".title-metric")).toHaveCount(6);
+  await expect(titles.locator(".title-metric").filter({ hasText: "Grand Chelem" }).locator("dd")).toHaveText("10");
+  await expect(titles.locator(".title-metric").filter({ hasText: "Jeux olympiques" }).locator("dd")).toHaveText("0");
+  await expect(titles.getByText("Palmarès de carrière, toutes surfaces.")).toBeVisible();
   await expect(
     page.getByText(/9\s?876/, { exact: true }),
   ).toBeVisible();

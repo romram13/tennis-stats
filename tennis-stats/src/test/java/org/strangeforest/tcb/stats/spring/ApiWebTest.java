@@ -52,6 +52,25 @@ class ApiWebTest {
 		mvc.perform(get("/api/v1/players/999")).andExpect(status().isNotFound());
 	}
 
+	@Test void servesTitlesByTournamentCategoryIncludingZero() throws Exception {
+		Player player = new Player(1);
+		player.setGrandSlams(2);
+		player.setTourFinals(1);
+		player.setMasters(3);
+		player.setOlympics(0);
+		player.setAtp500(1);
+		player.setAtp250(1);
+		when(playerService.getPlayer(1)).thenReturn(player);
+		mvc.perform(get("/api/v1/players/1"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.grandSlams").value(2))
+			.andExpect(jsonPath("$.tourFinals").value(1))
+			.andExpect(jsonPath("$.masters").value(3))
+			.andExpect(jsonPath("$.olympics").value(0))
+			.andExpect(jsonPath("$.atp500").value(1))
+			.andExpect(jsonPath("$.atp250").value(1));
+	}
+
 	@Test void servesPlayerWithMissingBackhand() throws Exception {
 		Player player = new Player(57819);
 		player.setHand("R");

@@ -11,6 +11,11 @@ const player = {
   bestRank: 1,
   titles: 8,
   grandSlams: 2,
+  tourFinals: 1,
+  masters: 3,
+  olympics: 0,
+  atp500: 1,
+  atp250: 1,
 };
 const ranking = {
   rank: 1,
@@ -85,6 +90,10 @@ test("classements, pagination, recherche et profil avec filtre de saison", async
     .click();
   await expect(page).toHaveURL(/\/joueurs\/1$/);
   await expect(page.getByRole("heading", { name: "Alex Test" })).toBeVisible();
+  const titles = page.getByRole("region", { name: "Titres remportés" });
+  for (const [label, count] of [["Grand Chelem", "2"], ["Masters Finals", "1"], ["Masters 1000", "3"], ["Jeux olympiques", "0"], ["ATP 500", "1"], ["ATP 250", "1"]]) {
+    await expect(titles.locator(".title-metric").filter({ has: page.getByText(label, { exact: true }) }).locator("dd")).toHaveText(count);
+  }
   await expect(page.getByText("Tournoi de test")).toBeVisible();
   await page
     .getByRole("combobox", { name: "Saison", exact: true })

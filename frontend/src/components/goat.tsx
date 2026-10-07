@@ -14,6 +14,7 @@ export const surfaces = [
   ["P", "Moquette"],
 ];
 const factors = [0, 1, 2, 3, 4, 5, 6, 8, 10];
+const PAGE_SIZE = 50;
 const mainWeights = [
   ["tournamentFactor", "Tournois"],
   ["rankingFactor", "Classement"],
@@ -106,6 +107,9 @@ function cleanQuery(input: URLSearchParams) {
     "rankingPoints",
     "achievementsPoints",
     "grandSlams",
+    "tourFinals",
+    "masters",
+    "olympics",
     "titles",
     "weeksAtNo1",
     "bestEloRating",
@@ -132,7 +136,7 @@ export function GoatRanking() {
     setData(undefined);
     setError("");
     setExpanded(undefined);
-    api<Page<GoatRow>>(`goatListTable?rowCount=20&${query}`, controller.signal)
+    api<Page<GoatRow>>(`goatListTable?rowCount=${PAGE_SIZE}&${query}`, controller.signal)
       .then(setData)
       .catch((e) => {
         if (!controller.signal.aborted) setError(e.message);
@@ -171,7 +175,7 @@ export function GoatRanking() {
       </select>
     </label>
   );
-  const sortHeader = (key: string, label: string, className = "") => (
+  const sortHeader = (key: string, label: string, className = "", tooltip?: string) => (
     <th
       className={className}
       aria-sort={
@@ -184,7 +188,7 @@ export function GoatRanking() {
             : "none"
       }
     >
-      <button onClick={() => sort(key)}>{label} ↕</button>
+      <button onClick={() => sort(key)} title={tooltip} aria-label={tooltip}>{label} ↕</button>
     </th>
   );
   return (
@@ -323,7 +327,7 @@ export function GoatRanking() {
                   <tr>
                     <th>Rang</th>
                     <th>Joueur</th>
-                    {sortHeader("totalPoints", "Points GOAT")}
+                    {sortHeader("totalPoints", "Pts", "", "Points GOAT")}
                     {sortHeader(
                       "tournamentPoints",
                       "Tournois",
@@ -335,10 +339,10 @@ export function GoatRanking() {
                       "Accomplissements",
                       "goat-achievement",
                     )}
-                    {sortHeader("grandSlams", "Grand Chelem")}
-                    <th>Masters Finals</th>
-                    <th>Masters 1000</th>
-                    <th>JO</th>
+                    {sortHeader("grandSlams", "GS", "", "Grand Chelem")}
+                    {sortHeader("tourFinals", "MF", "", "Masters Finals")}
+                    {sortHeader("masters", "M", "", "Masters 1000")}
+                    {sortHeader("olympics", "JO", "", "Jeux olympiques")}
                     {sortHeader("titles", "Titres")}
                     {sortHeader("weeksAtNo1", "Sem. nº 1")}
                     {sortHeader("bestEloRating", "Elo max.")}
@@ -367,10 +371,10 @@ export function GoatRanking() {
                 Précédent
               </button>
               <span>
-                Page {current} / {Math.max(1, Math.ceil(data.total / 20))}
+                Page {current} / {Math.max(1, Math.ceil(data.total / PAGE_SIZE))}
               </span>
               <button
-                disabled={current * 20 >= data.total}
+                disabled={current * PAGE_SIZE >= data.total}
                 onClick={() => page(1)}
               >
                 Suivant

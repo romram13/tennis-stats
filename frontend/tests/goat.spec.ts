@@ -31,7 +31,7 @@ test("GOAT : pondérations, pagination, URL, tri et détail standard par saison"
                 url.searchParams.get("tournamentFactor") === "2" ? 15876 : 9876,
             },
           ],
-          total: 21,
+          total: 51,
         },
       });
     if (url.pathname.endsWith("/players/1/goat"))
@@ -91,9 +91,24 @@ test("GOAT : pondérations, pagination, URL, tri et détail standard par saison"
   await page.getByRole("button", { name: "Suivant", exact: true }).click();
   await expect(page).toHaveURL(/current=2/);
   await page
-    .getByRole("button", { name: "Points GOAT ↕", exact: true })
+    .getByRole("button", { name: "Points GOAT", exact: true })
     .click();
   await expect(page).not.toHaveURL(/current=2/);
+  for (const [key, label] of [
+    ["tourFinals", "Masters Finals"],
+    ["masters", "Masters 1000"],
+    ["olympics", "Jeux olympiques"],
+  ]) {
+    const button = page.getByRole("button", { name: label, exact: true });
+    await expect(button).toHaveAttribute("title", label);
+    for (const direction of ["desc", "asc"]) {
+      await button.click();
+      await expect.poll(() =>
+        calls.filter((url) => url.pathname.endsWith("goatListTable")).at(-1)?.searchParams.get(`sort[${key}]`),
+      ).toBe(direction);
+      await expect(button.locator("..")).toHaveAttribute("aria-sort", direction === "desc" ? "descending" : "ascending");
+    }
+  }
   await page.reload();
   await expect(
     page.getByRole("combobox", { name: "Tournois", exact: true }),
@@ -110,12 +125,12 @@ test("GOAT : pondérations, pagination, URL, tri et détail standard par saison"
   await expect(page.getByRole("heading", { name: row.name })).toBeVisible();
   await expect(page).toHaveURL(/joueurs\/1\/goat\?surface=C/);
   await expect(
-    page.getByText("Barème standard · Coefficients × 1 · Sans extrapolation"),
+    page.getByText(/9\s?876/, { exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole("rowheader", { name: "2025", exact: true }),
   ).toBeVisible();
-  await page.getByText("Ventilation 2025", { exact: true }).click();
+  await page.getByText("Détails 2025", { exact: true }).click();
   await expect(page.getByText("Grand Chelem · victoire : 1")).toBeVisible();
   await expect
     .poll(() =>

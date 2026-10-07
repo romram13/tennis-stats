@@ -575,6 +575,21 @@ footer p {
   letter-spacing: 2px;
   color: var(--ink);
 }
+.footer-data-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.footer-data-dates ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 footer a:hover {
   text-decoration: underline;
 }

@@ -107,6 +107,9 @@ def postgres_bin():
 
 def free_port(port):
     with socket.socket() as sock:
+        # Like the servers, allow rebinding after closed TCP connections enter
+        # TIME_WAIT. A live listener still prevents this bind from succeeding.
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
             sock.bind(("127.0.0.1", port))
         except OSError:

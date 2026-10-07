@@ -13,6 +13,12 @@ Première interface en français, avec Next.js App Router, React et TypeScript :
 Les données affichées viennent de l'API Java. Aucune donnée de démonstration n'est
 incluse dans l'application. Les fixtures des tests sont isolées dans `tests/`.
 
+Le pied de page commun affiche les dernières dates disponibles dans la base pour
+les matchs, le classement ATP et le classement Elo via `GET /api/v1/dataDates`.
+Ces dates correspondent au contenu des données, pas au moment de leur import.
+Une source vide affiche « Date non disponible » ; une erreur API affiche
+« Dates momentanément indisponibles ».
+
 ## Démarrer le projet complet
 
 Depuis la racine du dépôt :

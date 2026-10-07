@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DataDates } from "@/components/data-dates";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ export default function RootLayout({
             Données ATP · Jeff Sackmann / Tennis Abstract et contributeurs ↗
           </a>
           <span>CC BY-NC-SA 4.0</span>
+          <DataDates />
         </footer>
       </body>
     </html>

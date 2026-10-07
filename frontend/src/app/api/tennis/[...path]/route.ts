@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Explicit allowlist: this route cannot proxy administration or arbitrary URLs.
 const endpoints = new Set([
+  "dataDates",
   "autocompletePlayer",
   "rankingsTableTable",
   "rankingsDate",

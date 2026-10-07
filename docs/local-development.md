@@ -25,6 +25,10 @@ Le script ne démarre ni ne modifie le service PostgreSQL système. Un port déj
 occupé provoque une erreur ; aucun processus existant n'est arrêté pour libérer un port.
 Un verrou empêche deux lanceurs de gérer simultanément le même cluster.
 
+Le contrôle des ports permet un redémarrage immédiat après l'arrêt, même si des
+connexions TCP fermées restent temporairement en état `TIME_WAIT`. Un serveur
+encore à l'écoute provoque toujours une erreur de port occupé.
+
 Le premier lancement nécessite Internet et peut prendre quelques minutes pour
 Java, Gradle et npm. Les lancements suivants réutilisent les fichiers téléchargés.
 

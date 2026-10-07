@@ -338,7 +338,7 @@ class ATPTennisLoader {
 		print 'Correction des données (complète)'
 		executeSQLFile(sql, '/load-functions.sql')
 		executeSQLFile(sql, '/correct-data-full.sql')
-		println " finished in $stopwatch"
+		println " terminé en $stopwatch"
 
 		println 'Mise à jour des surfaces des événements de tournoi...'
 		executeSQLFile(sql, '/tournament-event-surfaces.sql')
@@ -352,7 +352,7 @@ class ATPTennisLoader {
 		print 'Correction des données (delta)'
 		executeSQLFile(sql, '/load-functions.sql')
 		executeSQLFile(sql, '/correct-data-delta.sql')
-		println " finished in $stopwatch"
+		println " terminé en $stopwatch"
 
 		println 'Mise à jour des propriétés de la carte des événements de tournoi...'
 		executeSQLFile(sql, '/tournament-map-properties.sql')
@@ -391,11 +391,11 @@ class ATPTennisLoader {
 
 	def refreshMaterializedView(Sql sql, String viewName) {
 		def stopwatch = Stopwatch.createStarted()
-		print "Refreshing materialized view '$viewName'"
+		print "Actualisation de la vue matérialisée '$viewName'"
 		withTx sql, { Sql s ->
 			s.execute("REFRESH MATERIALIZED VIEW $viewName".toString())
 		}
-		println " finished in $stopwatch"
+		println " terminé en $stopwatch"
 	}
 
 	def installExtensions(Sql sql) {

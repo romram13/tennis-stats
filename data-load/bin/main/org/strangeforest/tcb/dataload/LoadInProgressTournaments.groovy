@@ -14,14 +14,14 @@ static loadTournaments(SqlPool sqlPool) {
 			return false
 		def eventInfos = result.items
 		def newExtIds = eventInfos.collect { info -> info.extId }
-		println "New in-progress tournaments: $newExtIds"
+		println "Nouveaux tournois en cours : $newExtIds"
 		def changed = false
 		eventInfos.each { info ->
 			changed |= atpInProgressTournamentLoader.loadAndForecastTournament(info.urlId, info.extId)
 		}
 		oldExtIds.removeAll(newExtIds)
 		if (oldExtIds) {
-			println "Removing finished in-progress tournaments: $oldExtIds"
+			println "Suppression des tournois en cours terminés : $oldExtIds"
 			atpInProgressTournamentLoader.completeInProgressEventExtIds(oldExtIds)
 			changed = true
 		}

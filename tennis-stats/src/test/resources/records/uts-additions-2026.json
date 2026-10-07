@@ -1,0 +1,537 @@
+[
+  {
+    "id": "GrassMastersTitles",
+    "name": "Most Grass Masters Titles",
+    "infamous": false
+  },
+  {
+    "id": "MostTitlesAtEachGrandSlam",
+    "name": "Most Titles at Each Grand Slam Tournament",
+    "infamous": false
+  },
+  {
+    "id": "MostFinalsAtEachGrandSlam",
+    "name": "Most Finals at Each Grand Slam Tournament",
+    "infamous": false
+  },
+  {
+    "id": "MostSemiFinalsAtEachGrandSlam",
+    "name": "Most Semi-Finals at Each Grand Slam Tournament",
+    "infamous": false
+  },
+  {
+    "id": "MostQuarterFinalsAtEachGrandSlam",
+    "name": "Most Quarter-Finals at Each Grand Slam Tournament",
+    "infamous": false
+  },
+  {
+    "id": "MostEntriesAtEachGrandSlam",
+    "name": "Most Entries at Each Grand Slam Tournament",
+    "infamous": false
+  },
+  {
+    "id": "MatchesPlayedAtEachGrandSlamTournament",
+    "name": "Most Matches Played at Each Grand Slam Tournament",
+    "infamous": false
+  },
+  {
+    "id": "MatchesWonAtEachGrandSlamTournament",
+    "name": "Most Matches Won at Each Grand Slam Tournament",
+    "infamous": false
+  },
+  {
+    "id": "SeasonWinningPctVsNo1",
+    "name": "Highest Winning Pct. Vs No. 1 in Single Season",
+    "infamous": false
+  },
+  {
+    "id": "SeasonWinningPctVsTop5",
+    "name": "Highest Winning Pct. Vs Top 5 in Single Season",
+    "infamous": false
+  },
+  {
+    "id": "SeasonWinningPctVsTop10",
+    "name": "Highest Winning Pct. Vs Top 10 in Single Season",
+    "infamous": false
+  },
+  {
+    "id": "HighestNo1OpponentRankPct",
+    "name": "Highest No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestTop5OpponentRankPct",
+    "name": "Highest Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestTop10OpponentRankPct",
+    "name": "Highest Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestGrandSlamNo1OpponentRankPct",
+    "name": "Highest Grand Slam No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestGrandSlamTop5OpponentRankPct",
+    "name": "Highest Grand Slam Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestGrandSlamTop10OpponentRankPct",
+    "name": "Highest Grand Slam Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestMastersNo1OpponentRankPct",
+    "name": "Highest Masters No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestMastersTop5OpponentRankPct",
+    "name": "Highest Masters Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestMastersTop10OpponentRankPct",
+    "name": "Highest Masters Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestHardNo1OpponentRankPct",
+    "name": "Highest Hard No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestHardTop5OpponentRankPct",
+    "name": "Highest Hard Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestHardTop10OpponentRankPct",
+    "name": "Highest Hard Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestClayNo1OpponentRankPct",
+    "name": "Highest Clay No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestClayTop5OpponentRankPct",
+    "name": "Highest Clay Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestClayTop10OpponentRankPct",
+    "name": "Highest Clay Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestGrassNo1OpponentRankPct",
+    "name": "Highest Grass No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestGrassTop5OpponentRankPct",
+    "name": "Highest Grass Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestGrassTop10OpponentRankPct",
+    "name": "Highest Grass Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestCarpetNo1OpponentRankPct",
+    "name": "Highest Carpet No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestCarpetTop5OpponentRankPct",
+    "name": "Highest Carpet Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestCarpetTop10OpponentRankPct",
+    "name": "Highest Carpet Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestOutdoorNo1OpponentRankPct",
+    "name": "Highest Outdoor No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestOutdoorTop5OpponentRankPct",
+    "name": "Highest Outdoor Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestOutdoorTop10OpponentRankPct",
+    "name": "Highest Outdoor Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestIndoorNo1OpponentRankPct",
+    "name": "Highest Indoor No. 1 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestIndoorTop5OpponentRankPct",
+    "name": "Highest Indoor Top 5 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "HighestIndoorTop10OpponentRankPct",
+    "name": "Highest Indoor Top 10 Opponent Rank Pct.",
+    "infamous": false
+  },
+  {
+    "id": "SeasonHighestNo1OpponentRankPct",
+    "name": "Highest No. 1 Opponent Rank Pct. in Single Season",
+    "infamous": false
+  },
+  {
+    "id": "SeasonHighestTop5OpponentRankPct",
+    "name": "Highest Top 5 Opponent Rank Pct. in Single Season",
+    "infamous": false
+  },
+  {
+    "id": "SeasonHighestTop10OpponentRankPct",
+    "name": "Highest Top 10 Opponent Rank Pct. in Single Season",
+    "infamous": false
+  },
+  {
+    "id": "HardBagels",
+    "name": "Most Hard Bagels Scored",
+    "infamous": false
+  },
+  {
+    "id": "ClayBagels",
+    "name": "Most Clay Bagels Scored",
+    "infamous": false
+  },
+  {
+    "id": "GrassBagels",
+    "name": "Most Grass Bagels Scored",
+    "infamous": false
+  },
+  {
+    "id": "CarpetBagels",
+    "name": "Most Carpet Bagels Scored",
+    "infamous": false
+  },
+  {
+    "id": "OutdoorBagels",
+    "name": "Most Outdoor Bagels Scored",
+    "infamous": false
+  },
+  {
+    "id": "IndoorBagels",
+    "name": "Most Indoor Bagels Scored",
+    "infamous": false
+  },
+  {
+    "id": "TournamentBagels",
+    "name": "Most Bagels Scored at Single Tournament",
+    "infamous": false
+  },
+  {
+    "id": "HardBagelsPct",
+    "name": "Greatest Hard Bagels Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "ClayBagelsPct",
+    "name": "Greatest Clay Bagels Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "GrassBagelsPct",
+    "name": "Greatest Grass Bagels Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "CarpetBagelsPct",
+    "name": "Greatest Carpet Bagels Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "OutdoorBagelsPct",
+    "name": "Greatest Outdoor Bagels Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "IndoorBagelsPct",
+    "name": "Greatest Indoor Bagels Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "TournamentBagelsPct",
+    "name": "Greatest Bagels Scored Pct. at Single Tournament",
+    "infamous": false
+  },
+  {
+    "id": "HardBreadsticks",
+    "name": "Most Hard Breadsticks Scored",
+    "infamous": false
+  },
+  {
+    "id": "ClayBreadsticks",
+    "name": "Most Clay Breadsticks Scored",
+    "infamous": false
+  },
+  {
+    "id": "GrassBreadsticks",
+    "name": "Most Grass Breadsticks Scored",
+    "infamous": false
+  },
+  {
+    "id": "CarpetBreadsticks",
+    "name": "Most Carpet Breadsticks Scored",
+    "infamous": false
+  },
+  {
+    "id": "OutdoorBreadsticks",
+    "name": "Most Outdoor Breadsticks Scored",
+    "infamous": false
+  },
+  {
+    "id": "IndoorBreadsticks",
+    "name": "Most Indoor Breadsticks Scored",
+    "infamous": false
+  },
+  {
+    "id": "TournamentBreadsticks",
+    "name": "Most Breadsticks Scored at Single Tournament",
+    "infamous": false
+  },
+  {
+    "id": "HardBreadsticksPct",
+    "name": "Greatest Hard Breadsticks Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "ClayBreadsticksPct",
+    "name": "Greatest Clay Breadsticks Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "GrassBreadsticksPct",
+    "name": "Greatest Grass Breadsticks Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "CarpetBreadsticksPct",
+    "name": "Greatest Carpet Breadsticks Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "OutdoorBreadsticksPct",
+    "name": "Greatest Outdoor Breadsticks Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "IndoorBreadsticksPct",
+    "name": "Greatest Indoor Breadsticks Scored Pct.",
+    "infamous": false
+  },
+  {
+    "id": "TournamentBreadsticksPct",
+    "name": "Greatest Breadsticks Scored Pct. at Single Tournament",
+    "infamous": false
+  },
+  {
+    "id": "SingleTournamentGOATPoints",
+    "name": "Most GOAT Points at Single Tournament",
+    "infamous": false
+  },
+  {
+    "id": "SingleTournamentTournamentGOATPoints",
+    "name": "Most Tournament GOAT Points at Single Tournament",
+    "infamous": false
+  },
+  {
+    "id": "SingleTournamentBigWinsGOATPoints",
+    "name": "Most Big Wins GOAT Points at Single Tournament",
+    "infamous": false
+  },
+  {
+    "id": "RecordsWithGOATPoints",
+    "name": "Most Records With GOAT Points",
+    "infamous": false
+  },
+  {
+    "id": "BestPlayerThatNeverReachedTop4ATPRanking",
+    "name": "Best Player That Never Reached Top 4 ATP Ranking",
+    "infamous": true
+  },
+  {
+    "id": "BestPlayerThatNeverReachedTop4EloRanking",
+    "name": "Best Player That Never Reached Top 4 Elo Ranking",
+    "infamous": true
+  },
+  {
+    "id": "MatchesLostAtEachGrandSlamTournament",
+    "name": "Most Matches Lost at Each Grand Slam Tournament",
+    "infamous": true
+  },
+  {
+    "id": "SeasonLosingPctVsNo1",
+    "name": "Highest Losing Pct. Vs No. 1 in Single Season",
+    "infamous": true
+  },
+  {
+    "id": "SeasonLosingPctVsTop5",
+    "name": "Highest Losing Pct. Vs Top 5 in Single Season",
+    "infamous": true
+  },
+  {
+    "id": "SeasonLosingPctVsTop10",
+    "name": "Highest Losing Pct. Vs Top 10 in Single Season",
+    "infamous": true
+  },
+  {
+    "id": "HardBagelsAgainst",
+    "name": "Most Hard Bagels Against",
+    "infamous": true
+  },
+  {
+    "id": "ClayBagelsAgainst",
+    "name": "Most Clay Bagels Against",
+    "infamous": true
+  },
+  {
+    "id": "GrassBagelsAgainst",
+    "name": "Most Grass Bagels Against",
+    "infamous": true
+  },
+  {
+    "id": "CarpetBagelsAgainst",
+    "name": "Most Carpet Bagels Against",
+    "infamous": true
+  },
+  {
+    "id": "OutdoorBagelsAgainst",
+    "name": "Most Outdoor Bagels Against",
+    "infamous": true
+  },
+  {
+    "id": "IndoorBagelsAgainst",
+    "name": "Most Indoor Bagels Against",
+    "infamous": true
+  },
+  {
+    "id": "TournamentBagelsAgainst",
+    "name": "Most Bagels Against at Single Tournament",
+    "infamous": true
+  },
+  {
+    "id": "HardBagelsAgainstPct",
+    "name": "Greatest Hard Bagels Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "ClayBagelsAgainstPct",
+    "name": "Greatest Clay Bagels Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "GrassBagelsAgainstPct",
+    "name": "Greatest Grass Bagels Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "CarpetBagelsAgainstPct",
+    "name": "Greatest Carpet Bagels Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "OutdoorBagelsAgainstPct",
+    "name": "Greatest Outdoor Bagels Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "IndoorBagelsAgainstPct",
+    "name": "Greatest Indoor Bagels Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "TournamentBagelsAgainstPct",
+    "name": "Greatest Bagels Against Pct. at Single Tournament",
+    "infamous": true
+  },
+  {
+    "id": "HardBreadsticksAgainst",
+    "name": "Most Hard Breadsticks Against",
+    "infamous": true
+  },
+  {
+    "id": "ClayBreadsticksAgainst",
+    "name": "Most Clay Breadsticks Against",
+    "infamous": true
+  },
+  {
+    "id": "GrassBreadsticksAgainst",
+    "name": "Most Grass Breadsticks Against",
+    "infamous": true
+  },
+  {
+    "id": "CarpetBreadsticksAgainst",
+    "name": "Most Carpet Breadsticks Against",
+    "infamous": true
+  },
+  {
+    "id": "OutdoorBreadsticksAgainst",
+    "name": "Most Outdoor Breadsticks Against",
+    "infamous": true
+  },
+  {
+    "id": "IndoorBreadsticksAgainst",
+    "name": "Most Indoor Breadsticks Against",
+    "infamous": true
+  },
+  {
+    "id": "TournamentBreadsticksAgainst",
+    "name": "Most Breadsticks Against at Single Tournament",
+    "infamous": true
+  },
+  {
+    "id": "HardBreadsticksAgainstPct",
+    "name": "Greatest Hard Breadsticks Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "ClayBreadsticksAgainstPct",
+    "name": "Greatest Clay Breadsticks Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "GrassBreadsticksAgainstPct",
+    "name": "Greatest Grass Breadsticks Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "CarpetBreadsticksAgainstPct",
+    "name": "Greatest Carpet Breadsticks Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "OutdoorBreadsticksAgainstPct",
+    "name": "Greatest Outdoor Breadsticks Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "IndoorBreadsticksAgainstPct",
+    "name": "Greatest Indoor Breadsticks Against Pct.",
+    "infamous": true
+  },
+  {
+    "id": "TournamentBreadsticksAgainstPct",
+    "name": "Greatest Breadsticks Against Pct. at Single Tournament",
+    "infamous": true
+  }
+]

@@ -1,4 +1,5 @@
 org.strangeforest.tcb.stats.TennisStatsApplication=org.springframework.stereotype.Component
+org.strangeforest.tcb.stats.controller.DataDatesResource=org.springframework.stereotype.Component
 org.strangeforest.tcb.stats.controller.GOATDetailsResource=org.springframework.stereotype.Component
 org.strangeforest.tcb.stats.controller.GOATListResource=org.springframework.stereotype.Component
 org.strangeforest.tcb.stats.controller.GreatestMatchesResource=org.springframework.stereotype.Component

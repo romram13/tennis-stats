@@ -109,6 +109,8 @@ public abstract class Records {
 		register(MISC, new MostBagelsBreadsticksCategory(MostBagelsBreadsticksCategory.RecordType.SCORED), false);
 		register(MISC, new GOATPointsCategory(), false);
 		register(MISC, new MostRecordsCategory(false), false);
+		register(MISC, new OpponentRankPctCategory(), false);
+		register(TITLES, new GrandSlamCoverageCategory(false), false);
 		// Infamous Records
 		register(NEVER, new BestPlayerThatNeverCategory(), true);
 		register(TITLES, new HardestTitleCategory(HardestTitleCategory.RecordType.EASIEST), true);
@@ -126,5 +128,6 @@ public abstract class Records {
 		register(MISC, new HighestOpponentRankCategory(HighestOpponentRankCategory.RecordType.LOWEST, HighestOpponentRankCategory.RankingType.ELO_RATING), true);
 		register(MISC, new MostBagelsBreadsticksCategory(MostBagelsBreadsticksCategory.RecordType.AGAINST), true);
 		register(MISC, new MostRecordsCategory(true), true);
+		register(LOSES, new GrandSlamCoverageCategory(true), true);
 	}
 }

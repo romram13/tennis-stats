@@ -72,6 +72,9 @@ public class GreatestMatchPctCategory extends RecordCategory {
 		register(greatestMatchPctVs(type, NO_1_FILTER));
 		register(greatestMatchPctVs(type, TOP_5_FILTER));
 		register(greatestMatchPctVs(type, TOP_10_FILTER));
+		register(greatestSeasonMatchPctVs(type, NO_1_FILTER));
+		register(greatestSeasonMatchPctVs(type, TOP_5_FILTER));
+		register(greatestSeasonMatchPctVs(type, TOP_10_FILTER));
 		register(greatestSeasonMatchPct(type, ALL));
 		register(greatestSeasonMatchPct(type, HARD));
 		register(greatestSeasonMatchPct(type, CLAY));
@@ -141,6 +144,26 @@ public class GreatestMatchPctCategory extends RecordCategory {
 				PLAYED_COLUMN
 			),
 			format("Minimum %1$d %2$s", perfCategory.getMinEntries(), perfCategory.getEntriesName())
+		);
+	}
+
+	private static Record greatestSeasonMatchPctVs(RecordType type, RecordDomain domain) {
+		var perfCategory = PerformanceCategory.get(domain.perfCategory);
+		return new Record<>(
+			"Season" + type.name + "PctVs" + domain.id, "Highest " + type.name + " Pct. Vs " + domain.name + " in Single Season",
+			/* language=SQL */
+			"SELECT player_id, season, " + type.expression(domain.columnPrefix) + " AS pct, " + domain.columnPrefix + "_won AS won, " + domain.columnPrefix + "_lost AS lost\n" +
+			"FROM player_season_performance WHERE " + domain.columnPrefix + "_won + " + domain.columnPrefix + "_lost >= " + (perfCategory.getMinEntries() / 10),
+			"r.won, r.lost, r.season", "r.pct DESC", "r.pct DESC, r.won + r.lost DESC, r.season",
+			type.seasonDetailClass, (playerId, recordDetail) -> format("/playerProfile?playerId=%1$d&tab=matches%2$s&season=%3$d&outcome=played", playerId, domain.urlParam, recordDetail.getSeason()),
+			List.of(
+				new RecordColumn("value", null, "valueUrl", PCT_WIDTH, "right", type.name + " Pct."),
+				WON_COLUMN,
+				LOST_COLUMN,
+				PLAYED_COLUMN,
+				new RecordColumn("season", "numeric", null, SEASON_WIDTH, "center", "Season")
+			),
+			format("Minimum %1$d %2$s", (perfCategory.getMinEntries() / 10), perfCategory.getEntriesName())
 		);
 	}
 

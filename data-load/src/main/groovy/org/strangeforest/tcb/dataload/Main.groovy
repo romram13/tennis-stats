@@ -25,6 +25,7 @@ cli.nt('Charger les nouveaux tournois terminés')
 cli.el('Calculer les cotes Elo')
 cli.rc('Actualiser les données calculées')
 cli.rr('Actualiser les records')
+cli.ur('Appliquer la correction des records et des barèmes GOAT UTS')
 cli.rp(args: 1, argName: 'Records pause', 'Pause between refreshing 100 records in ms [default 2000]')
 cli.ip('Charger les tournois en cours')
 cli.ff('Forcer la prévision des tournois en cours')
@@ -34,7 +35,7 @@ cli.rsc('Redémarrer le connecteur')
 cli.help('Print this message')
 def options = cli.parse(args)
 
-if (options && (options.ie || options.dd || options.cd || options.lt || options.ln || options.lp || options.la || options.nr || options.nt || options.el || options.rc || options.rr || options.rp || options.ip || options.ff || options.vc || options.cc || options.rsc)) {
+if (options && (options.ie || options.dd || options.cd || options.lt || options.ln || options.lp || options.la || options.nr || options.nt || options.el || options.rc || options.rr || options.ur || options.rp || options.ip || options.ff || options.vc || options.cc || options.rsc)) {
 	setProperties(options)
 
 	if (options.ie)
@@ -71,6 +72,8 @@ if (options && (options.ie || options.dd || options.cd || options.lt || options.
 	}
 	if (options.ip)
 		new LoadInProgressTournaments().run()
+	if (options.ur)
+		new RecordsUpgradeLoader().upgrade()
 	if (options.vc)
 		callLoader('vacuum')
 	if (options.cc)

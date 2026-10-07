@@ -32,6 +32,16 @@ public class MostRecordsCategory extends RecordCategory {
 	public MostRecordsCategory(boolean infamous) {
 		super("Most " + (infamous ? "Infamous " : "") + "Records");
 		register(mostRecords(infamous ? INFAMOUS : FAMOUS));
+		if (!infamous) register(recordsWithGOATPoints());
+	}
+
+	private static Record recordsWithGOATPoints() {
+		return new Record<>("RecordsWithGOATPoints", "Most Records With GOAT Points",
+			"SELECT r.player_id, count(DISTINCT r.record_id) AS value FROM player_record r " +
+			"JOIN records_goat_points g USING (record_id, rank) GROUP BY r.player_id",
+			"r.value", "r.value DESC", "r.value DESC",
+			IntegerRecordDetail.class, (playerId, detail) -> format("/playerProfile?playerId=%1$d&tab=records", playerId),
+			List.of(new RecordColumn("value", null, "valueUrl", RECORDS_WIDTH, "right", "Records")));
 	}
 
 	private static Record mostRecords(RecordType type) {

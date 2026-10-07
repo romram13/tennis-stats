@@ -258,6 +258,15 @@ def main():
             if len(jars) != 1:
                 raise RuntimeError("JAR API absent ou ambigu. Nettoyez les anciens JAR et relancez sans --skip-build.")
             start_postgres()
+            importer = ROOT / "data-load/build/install/data-load/bin/data-load"
+            if not importer.exists():
+                raise RuntimeError("Importeur absent : relancez ./dev.sh sans --skip-build.")
+            migration_env = env.copy()
+            migration_env["JAVA_OPTS"] = "-Dtcb.db.url=jdbc:postgresql://127.0.0.1:" + str(DB_PORT) + "/tcb"
+            migration_env["JAVA_OPTS"] += " -Dtcb.db.username=tcb"
+            migration_env["TCB_DB_PASSWORD"] = os.environ.get("DB_PASSWORD", "tcb")
+            say("Vérification de la correction des records et des barèmes GOAT…")
+            run([importer, "-ur"], env=migration_env)
             env.update(SPRING_DATASOURCE_URL=f"jdbc:postgresql://127.0.0.1:{DB_PORT}/tcb",
                        SPRING_DATASOURCE_USERNAME="tcb", SPRING_DATASOURCE_PASSWORD=os.environ.get("DB_PASSWORD", "tcb"),
                        SERVER_ADDRESS="127.0.0.1", SERVER_PORT=str(api_port), SPRING_PROFILES_ACTIVE="local")

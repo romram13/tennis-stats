@@ -39,7 +39,7 @@ abstract class BaseXMLLoader {
 		def seconds = stopwatch.elapsed(TimeUnit.SECONDS)
 		def rows = progress.ticks
 		int rowsPerSecond = seconds ? rows / seconds : 0
-		println "Rows: $rows in $stopwatch ($rowsPerSecond row/s)"
+		println "Lignes : $rows en $stopwatch ($rowsPerSecond ligne/s)"
 		return rows
 	}
 
@@ -50,7 +50,7 @@ abstract class BaseXMLLoader {
 			if (stream)
 				new InputStreamReader(stream)
 			else
-				throw new FileNotFoundException("Cannot find file '$path' in classpath.")
+				throw new FileNotFoundException("Impossible de trouver le fichier '$path' dans le classpath.")
 		}
 		else
 			new FileReader(file)

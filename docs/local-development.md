@@ -17,8 +17,9 @@ Le script :
 3. construit le JAR de l'API et l'importeur avec Gradle ;
 4. initialise, si nécessaire, un cluster PostgreSQL propre au projet dans `.local/postgres` ;
 5. crée la base `tcb` et son schéma lorsqu'elle est vide, dans une transaction ;
-6. démarre l'API et attend sa réponse de santé ;
-7. installe les dépendances npm si nécessaire et démarre Next.js.
+6. applique une seule fois la correction du catalogue et des barèmes de records UTS ;
+7. démarre l'API et attend sa réponse de santé ;
+8. installe les dépendances npm si nécessaire et démarre Next.js.
 
 **Ctrl+C arrête les serveurs lancés par le script.** Les données restent sur disque.
 Le script ne démarre ni ne modifie le service PostgreSQL système. Un port déjà
@@ -28,6 +29,20 @@ Un verrou empêche deux lanceurs de gérer simultanément le même cluster.
 Le contrôle des ports permet un redémarrage immédiat après l'arrêt, même si des
 connexions TCP fermées restent temporairement en état `TIME_WAIT`. Un serveur
 encore à l'écoute provoque toujours une erreur de port occupé.
+
+La correction UTS du 7 octobre 2026 ajoute 107 définitions de records et 18 barèmes
+de points GOAT globaux. Elle recalcule les nouveaux records, les totaux GOAT
+globaux et par surface ainsi que les records qui dépendent de ces totaux. Le
+catalogue comprend alors 1 531 performances et 407 records négatifs (1 938 au
+total). Les résultats restent ceux des données locales : ils peuvent différer
+d'UTS lorsque les historiques importés diffèrent.
+
+L'importeur exécute cette correction dans une transaction et enregistre sa
+réussite dans `data_migration`. Les démarrages suivants ne la répètent pas.
+Pour l'appliquer sur une base différente, utiliser l'importeur avec `-ur` et
+`-url jdbc:postgresql://hote:port/tcb` ; `TCB_DB_PASSWORD` configure le mot de passe.
+Après une correction sur une API déjà démarrée, arrêter le lanceur puis relancer
+`./dev.sh` pour charger le catalogue et vider les caches.
 
 Le premier lancement nécessite Internet et peut prendre quelques minutes pour
 Java, Gradle et npm. Les lancements suivants réutilisent les fichiers téléchargés.

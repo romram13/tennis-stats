@@ -397,6 +397,43 @@ VALUES
 ('HighestTourFinalsOpponentEloRating', 1, 1),
 ('HighestMastersOpponentEloRating', 1, 1);
 
+-- Additional records rewarded by the UTS global GOAT formula.
+INSERT INTO records_goat_points (record_id, rank, goat_points)
+VALUES
+('DavisCupTitles', 1, 1),
+('HardGrandSlamTitles', 1, 4),
+('HardGrandSlamTitles', 2, 2),
+('HardGrandSlamTitles', 3, 1),
+('ClayGrandSlamTitles', 1, 4),
+('ClayGrandSlamTitles', 2, 2),
+('ClayGrandSlamTitles', 3, 1),
+('GrassGrandSlamTitles', 1, 4),
+('GrassGrandSlamTitles', 2, 2),
+('GrassGrandSlamTitles', 3, 1),
+('HardMastersTitles', 1, 2),
+('HardMastersTitles', 2, 1),
+('ClayMastersTitles', 1, 2),
+('ClayMastersTitles', 2, 1),
+('GrassMastersTitles', 1, 2),
+('GrassMastersTitles', 2, 1),
+('CarpetMastersTitles', 1, 2),
+('CarpetMastersTitles', 2, 1),
+('HardBigTitles', 1, 2),
+('HardBigTitles', 2, 1),
+('ClayBigTitles', 1, 2),
+('ClayBigTitles', 2, 1),
+('GrassBigTitles', 1, 2),
+('GrassBigTitles', 2, 1),
+('CarpetBigTitles', 1, 2),
+('CarpetBigTitles', 2, 1),
+('HardGrandSlamFinals', 1, 1),
+('ClayGrandSlamFinals', 1, 1),
+('GrassGrandSlamFinals', 1, 1),
+('ConsecutiveEndsOfSeasonAtATPNo1', 1, 2),
+('ConsecutiveEndsOfSeasonAtATPNo1', 2, 1),
+('ConsecutiveEndsOfSeasonAtATPTop2', 1, 1),
+('ConsecutiveEndsOfSeasonAtATPTop3', 1, 1);
+
 DELETE FROM surface_records_goat_points;
 INSERT INTO surface_records_goat_points
 (record_id, rank, goat_points)

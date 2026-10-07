@@ -84,12 +84,19 @@ public class MostBagelsBreadsticksCategory extends RecordCategory {
 		register(mostItems(type, itemType, ATP_500));
 		register(mostItems(type, itemType, ATP_250));
 		register(mostItems(type, itemType, DAVIS_CUP));
+		register(mostItems(type, itemType, HARD));
+		register(mostItems(type, itemType, CLAY));
+		register(mostItems(type, itemType, GRASS));
+		register(mostItems(type, itemType, CARPET));
+		register(mostItems(type, itemType, OUTDOOR));
+		register(mostItems(type, itemType, INDOOR));
 		if (type == SCORED) {
 			register(mostItemsVs(type, itemType, NO_1_FILTER));
 			register(mostItemsVs(type, itemType, TOP_5_FILTER));
 			register(mostItemsVs(type, itemType, TOP_10_FILTER));
 		}
 		register(mostSeasonItems(type, itemType));
+		register(mostTournamentItems(type, itemType));
 
 		register(greatestItemPct(type, itemType, ALL));
 		register(greatestItemPct(type, itemType, GRAND_SLAM));
@@ -100,12 +107,19 @@ public class MostBagelsBreadsticksCategory extends RecordCategory {
 		register(greatestItemPct(type, itemType, ATP_500));
 		register(greatestItemPct(type, itemType, ATP_250));
 		register(greatestItemPct(type, itemType, DAVIS_CUP));
+		register(greatestItemPct(type, itemType, HARD));
+		register(greatestItemPct(type, itemType, CLAY));
+		register(greatestItemPct(type, itemType, GRASS));
+		register(greatestItemPct(type, itemType, CARPET));
+		register(greatestItemPct(type, itemType, OUTDOOR));
+		register(greatestItemPct(type, itemType, INDOOR));
 		if (type == SCORED) {
 			register(greatestItemPctVs(type, itemType, NO_1_FILTER));
 			register(greatestItemPctVs(type, itemType, TOP_5_FILTER));
 			register(greatestItemPctVs(type, itemType, TOP_10_FILTER));
 		}
 		register(greatestSeasonItemPct(type, itemType));
+		register(greatestTournamentItemPct(type, itemType));
 	}
 
 	private static Record mostItems(RecordType type, ItemType itemType, RecordDomain domain) {
@@ -179,6 +193,34 @@ public class MostBagelsBreadsticksCategory extends RecordCategory {
 			List.of(
 				new RecordColumn("value", null, "valueUrl", ITEMS_WIDTH, "right", itemType.name + prefix(type.name, " ")),
 				new RecordColumn("season", "numeric", null, SEASON_WIDTH, "center", "Season")
+			)
+		);
+	}
+
+
+	private static Record mostTournamentItems(RecordType type, ItemType itemType) {
+		return new Record<>(
+			"Tournament" + itemType.name + type.id, "Most " + itemType.name + prefix(type.name, " ") + " at Single Tournament",
+			/* language=SQL */
+			"WITH player_items AS (\n" +
+			"  SELECT m.winner_id AS player_id, m.tournament_id, count(match_id) AS items, max(date) AS last_date\n" +
+			"  FROM match_for_stats_v m INNER JOIN set_score s USING (match_id)\n" +
+			"  WHERE " + type.itemCondition(itemType) + "\n" +
+			"  GROUP BY m.winner_id, m.tournament_id\n" +
+			"  UNION ALL\n" +
+			"  SELECT m.loser_id, m.tournament_id, count(match_id), max(date)\n" +
+			"  FROM match_for_stats_v m INNER JOIN set_score s USING (match_id)\n" +
+			"  WHERE " + type.inverted().itemCondition(itemType) + "\n" +
+			"  GROUP BY m.loser_id, m.tournament_id\n" +
+			")\n" +
+			"SELECT player_id, tournament_id, t.name AS tournament, t.level, sum(items) AS value, max(last_date) AS last_date\n" +
+			"FROM player_items INNER JOIN tournament t USING (tournament_id)\n" +
+			"GROUP BY player_id, tournament_id, t.name, t.level",
+			"r.value, r.tournament_id, r.tournament, r.level", "r.value DESC", "r.value DESC, r.tournament, r.last_date",
+			TournamentIntegerRecordDetail.class, (playerId, recordDetail) -> format("/playerProfile?playerId=%1$d&tab=matches&tournamentId=%2$d&score=*%3$s", playerId, recordDetail.getTournamentId(), type.urlParam(itemType)),
+			List.of(
+				new RecordColumn("value", null, "valueUrl", ITEMS_WIDTH, "right", itemType.name + prefix(type.name, " ")),
+				new RecordColumn("tournament", null, "tournament", "120", "left", "Tournament")
 			)
 		);
 	}
@@ -277,6 +319,40 @@ public class MostBagelsBreadsticksCategory extends RecordCategory {
 				new RecordColumn("won", "numeric", null, ITEM_WIDTH, "right", type.name),
 				new RecordColumn("played", "numeric", null, ITEM_WIDTH, "right", "Played"),
 				new RecordColumn("season", "numeric", null, SEASON_WIDTH, "center", "Season")
+			),
+			format("Minimum %1$d sets", minEntries)
+		);
+	}
+
+
+	private static Record greatestTournamentItemPct(RecordType type, ItemType itemType) {
+		var perfCategory = PerformanceCategory.get(ALL.perfCategory);
+		var minEntries = perfCategory.getMinEntries() / 5;
+		return new Record<>(
+			"Tournament" + itemType.name + type.id + "Pct", "Greatest " +  itemType.name + prefix(type.name, " ") + " Pct. at Single Tournament",
+			/* language=SQL */
+			"WITH player_items AS (\n" +
+			"  SELECT m.winner_id AS player_id, m.tournament_id, count(match_id) AS total,\n" +
+			"    count(match_id) FILTER (WHERE " + type.itemCondition(itemType) + ") AS items, max(date) AS last_date\n" +
+			"  FROM match_for_stats_v m INNER JOIN set_score s USING (match_id)\n" +
+			"  GROUP BY m.winner_id, m.tournament_id\n" +
+			"  UNION ALL\n" +
+			"  SELECT m.loser_id, m.tournament_id, count(match_id),\n" +
+			"    count(match_id) FILTER (WHERE " + type.inverted().itemCondition(itemType) + ") AS items, max(date)\n" +
+			"  FROM match_for_stats_v m INNER JOIN set_score s USING (match_id)\n" +
+			"  GROUP BY m.loser_id, m.tournament_id\n" +
+			")\n" +
+			"SELECT player_id, tournament_id, t.name AS tournament, t.level, sum(items)::REAL / sum(total) AS pct, sum(items) AS won, sum(total - items) AS lost, max(last_date) AS last_date\n" +
+			"FROM player_items INNER JOIN tournament t USING (tournament_id)\n" +
+			"GROUP BY player_id, tournament_id, t.name, t.level\n" +
+			"HAVING sum(items) > 0 AND sum(total) >= " + minEntries,
+			"r.won, r.lost, r.tournament_id, r.tournament, r.level", "r.pct DESC", "r.pct DESC, r.won + r.lost DESC, r.tournament, r.last_date",
+			TournamentWinningPctRecordDetail.class, (playerId, recordDetail) -> format("/playerProfile?playerId=%1$d&tab=matches&tournamentId=%2$d", playerId, recordDetail.getTournamentId()),
+			List.of(
+				new RecordColumn("value", null, "valueUrl", PCT_WIDTH, "right", itemType.name + prefix(type.name, " ") + " Pct."),
+				new RecordColumn("won", "numeric", null, ITEM_WIDTH, "right", type.name),
+				new RecordColumn("played", "numeric", null, ITEM_WIDTH, "right", "Played"),
+				new RecordColumn("tournament", null, "tournament", "120", "left", "Tournament")
 			),
 			format("Minimum %1$d sets", minEntries)
 		);

@@ -27,10 +27,28 @@ public class GOATPointsCategory extends RecordCategory {
 		register(mostSeasonGOATPoints("GrandSlam", "Grand Slam", "grand_slam_goat_points"));
 		register(goatPointsCareerSpan());
 		register(mostConsecutiveSeasonsWithGOATPoints());
+		register(mostSingleTournamentGOATPoints(N_A, N_A,
+			"SELECT player_id, tournament_id, goat_points AS value FROM player_tournament_goat_points"));
+		register(mostSingleTournamentGOATPoints("Tournament", "Tournament",
+			"SELECT r.player_id, e.tournament_id, sum(r.goat_points) AS value FROM player_tournament_event_result r " +
+			"JOIN tournament_event e USING (tournament_event_id) WHERE r.goat_points > 0 GROUP BY r.player_id, e.tournament_id"));
+		register(mostSingleTournamentGOATPoints("BigWins", "Big Wins",
+			"SELECT w.player_id, e.tournament_id, round(sum(w.goat_points)) AS value FROM player_big_wins_v w " +
+			"JOIN match m USING (match_id) JOIN tournament_event e USING (tournament_event_id) GROUP BY w.player_id, e.tournament_id"));
 		registerMostGOATPoints(RecordDomain.HARD);
 		registerMostGOATPoints(RecordDomain.CLAY);
 		registerMostGOATPoints(RecordDomain.GRASS);
 		registerMostGOATPoints(RecordDomain.CARPET);
+	}
+
+	private static Record mostSingleTournamentGOATPoints(String id, String name, String query) {
+		return new Record<>("SingleTournament" + id + "GOATPoints", "Most " + suffix(name, " ") + "GOAT Points at Single Tournament",
+			"SELECT g.player_id, g.value, g.tournament_id, t.name AS tournament, t.level FROM (" + query + ") g " +
+			"JOIN tournament t USING (tournament_id) WHERE g.value > 0",
+			"r.value, r.tournament_id, r.tournament, r.level", "r.value DESC", "r.value DESC, r.tournament",
+			TournamentIntegerRecordDetail.class, (playerId, detail) -> format("/playerProfile?playerId=%1$d&tab=events&tournamentId=%2$d", playerId, detail.getTournamentId()),
+			List.of(new RecordColumn("value", null, "valueUrl", POINTS_WIDTH, "right", "GOAT Points"),
+				new RecordColumn("tournament", null, "tournament", "120", "left", "Tournament")));
 	}
 
 	private void registerMostGOATPoints(RecordDomain domain) {

@@ -38,6 +38,7 @@ public class MostTitlesCategory extends TournamentResultsCategory {
 		register(mostTitles(GRASS_TOURNAMENTS, GRAND_SLAM));
 		register(mostTitles(HARD_TOURNAMENTS, MASTERS));
 		register(mostTitles(CLAY_TOURNAMENTS, MASTERS));
+		register(mostTitles(GRASS_TOURNAMENTS, MASTERS));
 		register(mostTitles(CARPET_TOURNAMENTS, MASTERS));
 		register(mostTitles(HARD_TOURNAMENTS, BIG_TOURNAMENTS));
 		register(mostTitles(CLAY_TOURNAMENTS, BIG_TOURNAMENTS));

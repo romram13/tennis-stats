@@ -162,12 +162,12 @@ class ATPTourInProgressTournamentLoader extends BaseATPTourTournamentLoader {
 	def loadTournament(String urlId, extId, Integer season, String level, String surface, boolean verbose) {
 		def stopwatch = Stopwatch.createStarted()
 		def url = tournamentUrl(urlId, extId, season)
-		println "Fetching in-progress tournament URL '$url'"
+		println "Récupération de l'URL du tournoi en cours '$url'"
 		def doc = retriedGetDoc(url)
 		def dates = doc.select('.tourney-dates').text()
 		def atpLevel = extract(extract(doc.select('.tourney-badge-wrapper > img:nth-child(1)').attr("src"), '_', 1), '', '.')
 		if (!atpLevel || atpLevel == 'finals' || atpLevel == 'nextgen' || atpLevel == 'gen' || atpLevel == 'itf') {
-			println "Skipping tournament at '$url', unsupported level: $atpLevel"
+			println "Ignorer le tournoi à '$url', niveau non pris en charge : $atpLevel"
 			return 0
 		}
 		level = level ?: mapLevel(atpLevel, urlId)
@@ -178,7 +178,7 @@ class ATPTourInProgressTournamentLoader extends BaseATPTourTournamentLoader {
 		def indoor = mapIndoor(surface, name, season)
 		def drawType = mapDrawType(level)
 		if (drawType != 'KO') {
-			println "Skipping tournament at '$url', unsupported drawType: $drawType"
+			println "Ignorer le tournoi à '$url', type de tableau non pris en charge : $drawType"
 			return 0
 		}
 		def drawSize = doc.select('a.not-in-system:nth-child(1) > span:nth-child(1)').text()
@@ -188,7 +188,7 @@ class ATPTourInProgressTournamentLoader extends BaseATPTourTournamentLoader {
 		short matchNum = 0
 		def startDate = date extractStartDate(dates)
 		if (!startDate) {
-			println "Skipping tournament at '$url', cannot find start date"
+			println "Ignorer le tournoi à '$url', impossible de trouver la date de début"
 			return 0
 		}
 		def seedEntries = [:]
@@ -342,12 +342,12 @@ class ATPTourInProgressTournamentLoader extends BaseATPTourTournamentLoader {
 		if (matches) {
 			matchCount = saveMatches(event, matches)
 			if (matchCount > 0)
-				println "${matches.size()} matches loaded in $stopwatch"
+				println "${matches.size()} matchs chargés en $stopwatch"
 			else
-				println 'Matches not changed'
+				println 'Les matchs n\'ont pas changé'
 		}
 		else
-			println 'No matches found'
+			println 'Aucun match trouvé'
 
 		sql.commit()
 		matchCount
@@ -441,7 +441,7 @@ class ATPTourInProgressTournamentLoader extends BaseATPTourTournamentLoader {
 
 	def forecastTournament(extId, boolean verbose) {
 		if (verbose)
-			println '\nStarting tournament forecast'
+			println '\nDémarrage de la prévision du tournoi'
 		def stopwatch = Stopwatch.createStarted()
 		def matches = fetchMatches(extId)
 
@@ -474,7 +474,7 @@ class ATPTourInProgressTournamentLoader extends BaseATPTourTournamentLoader {
 
 			// Current state forecast
 			if (verbose)
-				println 'Current'
+				println 'État actuel'
 			tournamentForecaster = new KOTournamentForecaster(predictor, inProgressEventId, matches, entryResult, true, false, verbose)
 			def eloSurfaceFactors = new EloSurfaceFactors(SqlPool.dataSource(), LocalDate.now().year - 1)
 			tournamentForecaster.calculateEloRatings(eloSurfaceFactors)
@@ -502,7 +502,7 @@ class ATPTourInProgressTournamentLoader extends BaseATPTourTournamentLoader {
 		else
 			throw new UnsupportedOperationException("Draw type $drawType is not supported.")
 
-		println "Tournament forecast: ${resultCount} results loaded in $stopwatch"
+		println "Prévision du tournoi : ${resultCount} résultats chargés en $stopwatch"
 	}
 
 	def saveEvent(Map params) {

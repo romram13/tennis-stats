@@ -410,22 +410,22 @@ class ATPTennisLoader {
 	def createDatabase(Sql sql) {
 		def stopwatch = Stopwatch.createStarted()
 
-		println 'Creating types...'
+		println 'Création des types...'
 		executeSQLFile(sql, '/create-types.sql')
 
-		println 'Creating tables...'
+		println 'Création des tables...'
 		executeSQLFile(sql, '/create-tables.sql')
 
-		println 'Creating functions...'
+		println 'Création des fonctions...'
 		executeSQLFile(sql, '/create-functions.sql')
 
-		println 'Creating views...'
+		println 'Création des vues...'
 		executeSQLFile(sql, '/create-views.sql')
 
-		println 'Loading initial data...'
+		println 'Chargement des données initiales...'
 		executeSQLFile(sql, '/initial-load.sql')
 
-		println 'Creating load functions...'
+		println 'Création des fonctions de chargement...'
 		executeSQLFile(sql, '/load-functions.sql')
 
 		println "Base de données créée en $stopwatch"
@@ -434,19 +434,19 @@ class ATPTennisLoader {
 	def dropDatabase(Sql sql) {
 		def stopwatch = Stopwatch.createStarted()
 
-		println 'Dropping load functions...'
+		println 'Suppression des fonctions de chargement...'
 		executeSQLFile(sql, '/drop-load-functions.sql')
 
-		println 'Dropping views...'
+		println 'Suppression des vues...'
 		executeSQLFile(sql, '/drop-views.sql')
 
-		println 'Dropping functions...'
+		println 'Suppression des fonctions...'
 		executeSQLFile(sql, '/drop-functions.sql')
 
-		println 'Dropping tables...'
+		println 'Suppression des tables...'
 		executeSQLFile(sql, '/drop-tables.sql')
 
-		println 'Dropping types...'
+		println 'Suppression des types...'
 		executeSQLFile(sql, '/drop-types.sql')
 
 		println "Base de données supprimée en $stopwatch"

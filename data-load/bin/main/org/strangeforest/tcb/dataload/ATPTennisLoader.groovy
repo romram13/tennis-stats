@@ -391,7 +391,7 @@ class ATPTennisLoader {
 
 	def refreshMaterializedView(Sql sql, String viewName) {
 		def stopwatch = Stopwatch.createStarted()
-		print "Refreshing materialized view '$viewName'"
+		print "Actualisation de la vue matérialisée '$viewName'"
 		withTx sql, { Sql s ->
 			s.execute("REFRESH MATERIALIZED VIEW $viewName".toString())
 		}
